@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h2>ElectriMart</h2>
+      <h2>ElectroMart</h2>
     </>
   );
 }
