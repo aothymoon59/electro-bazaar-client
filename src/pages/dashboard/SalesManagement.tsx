@@ -1,5 +1,3 @@
-import React from "react";
-
 const SalesManagement = () => {
   return <div>SalesManagement</div>;
 };
