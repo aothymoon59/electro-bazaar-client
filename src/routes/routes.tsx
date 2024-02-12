@@ -4,11 +4,16 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import { dashboardPaths } from "./dashboard.routes";
 import { routesGenerator } from "../utils/routesGenerator";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
     children: routesGenerator(dashboardPaths),
   },
   {

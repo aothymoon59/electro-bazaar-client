@@ -4,8 +4,10 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -17,14 +19,19 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
-    const userInfo = {
-      email: data.email,
-      password: data.password,
-    };
+    try {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      };
 
-    const res = await login(userInfo).unwrap();
-    const user = verifyToken(res.data.accessToken);
-    dispatch(setUser({ user, token: res.data.accessToken }));
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res.data.accessToken);
+      dispatch(setUser({ user, token: res.data.accessToken }));
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
