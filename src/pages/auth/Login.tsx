@@ -46,8 +46,8 @@ const Login = () => {
     }
   };
   return (
-    <div className="p-3 h-screen flex justify-center items-center">
-      <div className="bg-purple-100 p-5 rounded-md shadow-md w-full max-w-[400px]">
+    <div className="lg:p-3 h-screen flex justify-center items-center bg-purple-100 lg:bg-transparent">
+      <div className="bg-purple-100 p-5 rounded-md sm:shadow-md w-full max-w-[400px]">
         <div className="text-center mb-5">
           <h2 className="text-xl font-normal mb-2">
             Welcome To{" "}
