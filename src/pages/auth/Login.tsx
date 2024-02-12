@@ -4,7 +4,7 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
@@ -13,20 +13,17 @@ import { ImSpinner9 } from "react-icons/im";
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const dispatch = useAppDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: "messi@gmail.com",
-      password: 123456,
-    },
-  });
-
-  const [login, { isLoading }] = useLoginMutation();
+  } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -40,11 +37,12 @@ const Login = () => {
       dispatch(setUser({ user, token: res.data.accessToken }));
       reset();
       toast.success(res.message);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error: any) {
       toast.error(error.data.message);
     }
   };
+
   return (
     <div className="lg:p-3 h-screen flex justify-center items-center bg-purple-100 lg:bg-transparent">
       <div className="bg-purple-100 p-5 rounded-md sm:shadow-md w-full max-w-[400px]">
@@ -68,7 +66,9 @@ const Login = () => {
               className="input input-bordered w-full"
             />
             {errors.email && (
-              <span className="text-red-600 mt-2">Email is required</span>
+              <span className="text-red-600 mt-2 text-xs">
+                Email is required
+              </span>
             )}
           </div>
           <div className="form-control mb-6 relative">
@@ -85,7 +85,7 @@ const Login = () => {
               className="input input-bordered w-full"
             />
             {errors.password?.type === "required" && (
-              <p className="text-red-600 mt-2">Password is required</p>
+              <p className="text-red-600 mt-2 text-xs">Password is required</p>
             )}
             <p
               className="absolute top-[48px] right-[15px]"
