@@ -95,7 +95,7 @@ const Login = () => {
             </p>
           </div>
           <button
-            className={`primary-main-btn w-full hover:bg-transparent hover:text-[#8850B3] transition-all duration-200 ease-in-out ${
+            className={`primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out ${
               isLoading && "cursor-not-allowed"
             }`}
             disabled={isLoading}

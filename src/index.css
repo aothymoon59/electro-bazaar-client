@@ -27,5 +27,5 @@ body {
 }
 
 .primary-main-btn {
-    @apply bg-[#8850B3] text-sm text-white py-2 px-4 rounded-xl font-semibold border border-[#8850B3] cursor-pointer
+    @apply bg-[#8850B3] text-sm text-white py-2 px-4 rounded-xl font-semibold border-0 cursor-pointer
 }

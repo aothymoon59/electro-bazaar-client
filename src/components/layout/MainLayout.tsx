@@ -1,29 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import { IoLogOut } from "react-icons/io5";
 import Sidebar from "./Sidebar";
-import { useAppDispatch } from "../../redux/hooks";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { useAppSelector } from "../../redux/hooks";
+import { currentUser } from "../../redux/features/auth/authSlice";
+import { useEffect, useState } from "react";
+import moment from "moment";
+import { FaUserCircle } from "react-icons/fa";
 
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
-  const dispatch = useAppDispatch();
+  const user: any = useAppSelector(currentUser);
+
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(moment().format("DD MMM YYYY hh:mm:ss A"));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <Layout style={{ height: "100vh" }}>
       <Sidebar />
       <Layout>
         <Header
-          className="bg-primary-main flex justify-end items-center"
+          className="bg-primary-main flex justify-end sm:justify-between items-center gap-2"
           style={{ padding: "0 20px" }}
         >
-          <button
-            onClick={() => dispatch(setUser({ user: null, token: null }))}
-            className="flex items-center gap-1 cursor-pointer bg-transparent border-0 text-white text-sm lg:text-lg"
-          >
-            <span>Logout</span>
-            <IoLogOut />
-          </button>
+          <div className="hidden sm:block">
+            <p className="text-[13px] text-white font-medium">{currentTime}</p>
+          </div>
+          <div className="flex items-center gap-1 font-medium text-white">
+            <FaUserCircle className="text-3xl" />
+            <span className="text-[15px]">{user?.name?.split(" ")?.[0]}</span>
+          </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div
