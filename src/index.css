@@ -15,6 +15,7 @@
 
 .ant-menu-item-selected .ant-menu-title-content {
     color: black;
+    background-color: transparent !important;
 }
 
 .ant-layout-sider-zero-width-trigger {
