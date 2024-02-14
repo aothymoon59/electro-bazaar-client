@@ -3,13 +3,35 @@ import logo from "../../assets/icons/lamp.png";
 import { dashboardPaths } from "../../routes/dashboard.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { IoLogOut } from "react-icons/io5";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { logout } from "../../redux/features/auth/authSlice";
 import { useAppDispatch } from "../../redux/hooks";
+import Swal from "sweetalert2";
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to logout!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#8850B3",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(logout());
+        Swal.fire({
+          title: "Logged out!",
+          text: "Your account has been logged out.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   return (
     <Sider
@@ -31,7 +53,7 @@ const Sidebar = () => {
       />
       <div className="flex justify-center items-center absolute bottom-4 left-[50%] translate-x-[-50%]">
         <button
-          onClick={() => dispatch(setUser({ user: null, token: null }))}
+          onClick={handleLogout}
           className="flex items-center gap-1 cursor-pointer bg-transparent border-0 text-white text-sm lg:text-lg"
         >
           <span>Logout</span>
