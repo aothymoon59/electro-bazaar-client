@@ -39,7 +39,10 @@ const MainLayout = () => {
             <span className="text-[15px]">{user?.name?.split(" ")?.[0]}</span>
           </div>
         </Header>
-        <Content style={{ margin: "24px 16px 0" }}>
+        <Content
+          className="bg-purple-100 rounded-lg"
+          style={{ margin: "24px 16px 0" }}
+        >
           <div
             style={{
               padding: 16,

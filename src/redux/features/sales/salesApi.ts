@@ -11,10 +11,20 @@ const salesApi = baseApi.injectEndpoints({
       invalidatesTags: ["gadgets"],
     }),
     getSaleHistory: builder.query({
-      query: (value: string) => ({
-        url: `/sales/get-sales-history?filter=${value}`,
-        method: "GET",
-      }),
+      query: (value: string) => {
+        const params = new URLSearchParams();
+
+        if (value) {
+          params.append("filterBy", value);
+        }
+
+        return {
+          url: `/sales/get-sales-history`,
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["gadgets"],
     }),
   }),
 });

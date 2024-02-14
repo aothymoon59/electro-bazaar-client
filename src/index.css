@@ -29,3 +29,14 @@ body {
 .primary-main-btn {
     @apply bg-[#8850B3] text-sm text-white py-2 px-4 rounded-xl font-semibold border-0 cursor-pointer
 }
+
+/* .custom-table .ant-table-thead>tr>th {
+    background-color: #8850B3;
+
+    color: white;
+
+} */
+
+/* .custom-table .ant-table-tbody>tr>td {
+    background-color: #c17df5;
+}  */
