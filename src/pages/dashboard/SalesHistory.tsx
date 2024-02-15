@@ -16,7 +16,7 @@ const columns: TableProps<SaleData>["columns"] = [
     title: "Sl NO.",
     dataIndex: "key",
     key: "key",
-    render: (text, record, index) => index + 1,
+    render: (_text, _record, index) => index + 1,
   },
   {
     title: "Buyer Name",

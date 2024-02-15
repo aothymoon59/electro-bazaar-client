@@ -1,14 +1,3 @@
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// export const baseApi = createApi({
-//   reducerPath: "baseApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "https://l2b2a5-electronic-gadget-backend.vercel.app/api/v1",
-//     credentials: "include",
-//   }),
-//   endpoints: () => ({}),
-// });
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BaseQueryApi,
@@ -48,7 +37,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     console.log("Sending refresh token");
 
     const res = await fetch(
-      "https://l2b2a5-electronic-gadget-backend.vercel.app/api/v1",
+      "https://l2b2a5-electronic-gadget-backend.vercel.app/api/v1/auth/refresh-token",
       // "http://localhost:5000/api/v1/auth/refresh-token",
       {
         method: "POST",
