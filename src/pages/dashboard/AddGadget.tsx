@@ -43,7 +43,7 @@ const AddGadget = () => {
   const handlePreventWheel = (e: any) => {
     e.target.addEventListener(
       "wheel",
-      function (e) {
+      function (e: any) {
         e.preventDefault();
       },
       { passive: false }
@@ -230,7 +230,7 @@ const AddGadget = () => {
           {/* Camera Resolution  */}
           <div className="form-control mb-4">
             <label className="label">
-              <span className="label-text font-medium">Camera Resolution*</span>
+              <span className="label-text font-medium">Camera Resolution</span>
             </label>
             <input
               type="number"

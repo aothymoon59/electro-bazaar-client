@@ -53,20 +53,19 @@ const SalesHistory = () => {
         <h5 className="font-bold text-xl leading-[30px] text-primary-main">
           Sales History
         </h5>
-        <div className="flex flex-wrap items-center gap-4">
-          {/* Package filtering */}
-          <select
-            defaultValue={"week"}
-            onChange={(e) => handleHistoryFilter(e.target.value)}
-            className="select select-bordered bg-primary-main border border-purple-300 text-white"
-          >
-            <option value={""}>All</option>
-            <option value={"day"}>Daily</option>
-            <option value={"week"}>Weekly</option>
-            <option value={"month"}>Monthly</option>
-            <option value={"year"}>Yearly</option>
-          </select>
-        </div>
+
+        {/* Package filtering */}
+        <select
+          defaultValue={"week"}
+          onChange={(e) => handleHistoryFilter(e.target.value)}
+          className="select select-bordered bg-primary-main border border-purple-300 text-white"
+        >
+          <option value={""}>All</option>
+          <option value={"day"}>Daily</option>
+          <option value={"week"}>Weekly</option>
+          <option value={"month"}>Monthly</option>
+          <option value={"year"}>Yearly</option>
+        </select>
       </div>
       <hr className="border-primary-main my-[23px]" />
       <div className="overflow-x-auto sales-history">
