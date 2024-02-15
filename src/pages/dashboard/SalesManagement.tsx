@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Spin } from "antd";
+import SalesManagementModal from "../../components/form/SalesManagementModal";
 
 const SalesManagement = () => {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
+  const [gadgetId, setGadgetId] = useState("");
+  const [limit, setLimit] = useState(0);
 
   // Debounce logic
   useEffect(() => {
@@ -100,7 +103,17 @@ const SalesManagement = () => {
                     {category}
                   </p>
                   <div className="card-actions justify-end mt-3">
-                    <button className="primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out">
+                    <button
+                      onClick={() => {
+                        const salesManagementModal = document.getElementById(
+                          "salesManagementModal"
+                        ) as HTMLDialogElement | null;
+                        salesManagementModal?.showModal();
+                        setGadgetId(_id);
+                        setLimit(quantity);
+                      }}
+                      className="primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out"
+                    >
                       Sell Now
                     </button>
                   </div>
@@ -109,6 +122,11 @@ const SalesManagement = () => {
             );
           })}
       </div>
+      <SalesManagementModal
+        gadgetId={gadgetId}
+        refetch={refetch}
+        limit={limit}
+      />
     </div>
   );
 };
