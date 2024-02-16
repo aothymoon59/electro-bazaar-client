@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Spin, Table, TableProps } from "antd";
 import {
   useDeleteGadgetMutation,
+  useDeleteMultipleMutation,
   useGetGadgetsQuery,
 } from "../../redux/features/gadgets/gadgetsApi";
 import { useState } from "react";
@@ -8,6 +10,9 @@ import { TQuery } from "../../types/query.types";
 import moment from "moment";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { TableRowSelection } from "antd/es/table/interface";
+import { DataSourceItemType } from "antd/es/auto-complete";
+import Swal from "sweetalert2";
 
 interface GadgetData {
   _id: string;
@@ -23,6 +28,41 @@ const ManageGadget = () => {
   const [query, setQuery] = useState<Partial<TQuery>>({});
   const { data, isLoading } = useGetGadgetsQuery(query);
   const [deleteGadget] = useDeleteGadgetMutation();
+  const [deleteMultiple] = useDeleteMultipleMutation();
+  const [ids, setIds] = useState<string[]>([]);
+
+  const rowSelection: TableRowSelection<DataSourceItemType> = {
+    onChange: (selectedRowKeys) => {
+      const stringKeys = selectedRowKeys.map(String); // Convert each Key to a string
+      setIds(stringKeys);
+    },
+  };
+
+  const handleDeleteMultiple = () => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to delete these gadgets!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#8850B3",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete!",
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          deleteMultiple(ids);
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Deleted Successfully.",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error: any) {
+      toast.error(error.data.message);
+    }
+  };
 
   const columns: TableProps<GadgetData>["columns"] = [
     Table.SELECTION_COLUMN,
@@ -103,9 +143,17 @@ const ManageGadget = () => {
           Gadgets Management
         </h5>
         {/* Gadget filtering */}
-        <button className="primary-main-btn hover:bg-opacity-80 transition-all duration-200 ease-in-out">
-          Filter
-        </button>
+        <div className="flex justify-center items-center gap-2 flex-wrap">
+          <button
+            onClick={handleDeleteMultiple}
+            className="primary-main-btn hover:bg-opacity-80 transition-all duration-200 ease-in-out"
+          >
+            Bulk Delete
+          </button>
+          <button className="primary-main-btn hover:bg-opacity-80 transition-all duration-200 ease-in-out">
+            Filter
+          </button>
+        </div>
       </div>
       <hr className="border-primary-main my-[23px]" />
       <div className="overflow-x-auto sales-history">
@@ -114,7 +162,7 @@ const ManageGadget = () => {
             className="custom-table"
             scroll={{ x: 768 }}
             columns={columns}
-            rowSelection={{}}
+            rowSelection={{ ...rowSelection }}
             dataSource={data?.data}
             rowKey="_id"
             pagination={{ pageSize: 10 }}
