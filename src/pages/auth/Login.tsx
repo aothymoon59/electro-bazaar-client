@@ -23,12 +23,7 @@ const Login = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: "app@orange.com",
-      password: "123456",
-    },
-  });
+  } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
     try {
