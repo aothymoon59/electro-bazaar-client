@@ -11,7 +11,6 @@ import moment from "moment";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { TableRowSelection } from "antd/es/table/interface";
-import { DataSourceItemType } from "antd/es/auto-complete";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
@@ -32,9 +31,9 @@ const ManageGadget = () => {
   const [deleteMultiple] = useDeleteMultipleMutation();
   const [ids, setIds] = useState<string[]>([]);
 
-  const rowSelection: TableRowSelection<DataSourceItemType> = {
+  const rowSelection: TableRowSelection<GadgetData> = {
     onChange: (selectedRowKeys) => {
-      const stringKeys = selectedRowKeys.map(String); // Convert each Key to a string
+      const stringKeys = selectedRowKeys.map(String);
       setIds(stringKeys);
     },
   };

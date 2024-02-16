@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { FieldValues, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import DuplicateGadgetModal from "../../components/form/DuplicateGadgetModal";
 
 const UpdateGadget = () => {
   const { id } = useParams();
@@ -81,6 +82,17 @@ const UpdateGadget = () => {
         <h5 className="font-bold text-xl leading-[30px] text-primary-main">
           Update Gadget
         </h5>
+        <button
+          onClick={() => {
+            const duplicateGadgetModal = document.getElementById(
+              "duplicateGadgetModal"
+            ) as HTMLDialogElement | null;
+            duplicateGadgetModal?.showModal();
+          }}
+          className="primary-main-btn hover:bg-opacity-80 transition-all duration-200 ease-in-out mt-4"
+        >
+          Duplicate Gadget
+        </button>
       </div>
       <hr className="border-primary-main my-[23px]" />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -262,6 +274,7 @@ const UpdateGadget = () => {
           )}
         </button>
       </form>
+      <DuplicateGadgetModal gadget={data?.data || {}} />
     </div>
   );
 };
