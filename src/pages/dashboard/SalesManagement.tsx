@@ -5,6 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Spin } from "antd";
 import SalesManagementModal from "../../components/form/SalesManagementModal";
+import EmptyState from "../../components/ui/EmptyState";
 
 const SalesManagement = () => {
   const [searchText, setSearchText] = useState("");
@@ -57,6 +58,7 @@ const SalesManagement = () => {
           <Spin spinning={true}></Spin>
         </div>
       )}
+      {data?.data?.length === 0 && <EmptyState message="No data found" />}
       <div className="grid md:grid-cols-3 gap-5">
         {Array.isArray(data?.data) &&
           data?.data?.map((gadget: any) => {
