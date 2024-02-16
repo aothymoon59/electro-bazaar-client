@@ -54,7 +54,7 @@ const SalesHistory = () => {
           Sales History
         </h5>
 
-        {/* Package filtering */}
+        {/* data filtering */}
         <select
           defaultValue={"week"}
           onChange={(e) => handleHistoryFilter(e.target.value)}
