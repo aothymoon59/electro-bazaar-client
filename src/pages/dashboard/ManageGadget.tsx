@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { TableRowSelection } from "antd/es/table/interface";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import FilterDrawer from "../../components/form/FilterDrawer";
 
 interface GadgetData {
   _id: string;
@@ -21,6 +22,7 @@ interface GadgetData {
   quantity: number;
   releaseDate: string;
   brand: string;
+  cameraResolution: number;
   category: string;
 }
 
@@ -51,6 +53,32 @@ const ManageGadget = () => {
       }).then((result: any) => {
         if (result.isConfirmed) {
           deleteMultiple(ids);
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Deleted Successfully.",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error: any) {
+      toast.error(error.data.message);
+    }
+  };
+
+  const handleSingleDelete = (id: string) => {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to delete this gadget!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#8850B3",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete!",
+      }).then((result: any) => {
+        if (result.isConfirmed) {
+          deleteGadget(id);
 
           Swal.fire({
             title: "Deleted!",
@@ -111,27 +139,18 @@ const ManageGadget = () => {
       sorter: (a, b) => a.category.localeCompare(b.category),
     },
     {
-      title: "Action 1",
+      title: "Actions",
       fixed: "right",
-      width: 90,
+      width: 100,
       render: (_text, record) => (
-        <Link to={`/gadgets/update/${record._id}`}>
-          <FaEdit />
-        </Link>
-      ),
-    },
-    {
-      title: "Action 2",
-      width: 90,
-      render: (_text, record) => (
-        <a
-          onClick={() => {
-            deleteGadget(record._id);
-            toast.success("Gadget deleted successfully");
-          }}
-        >
-          <FaTrash />
-        </a>
+        <div className="flex justify-center items-center gap-5">
+          <Link to={`/gadgets/update/${record._id}`}>
+            <FaEdit />
+          </Link>
+          <a onClick={() => handleSingleDelete(record._id)}>
+            <FaTrash className="text-red-500" />
+          </a>
+        </div>
       ),
     },
   ];
@@ -144,15 +163,16 @@ const ManageGadget = () => {
         </h5>
         {/* Gadget filtering */}
         <div className="flex justify-center items-center gap-2 flex-wrap">
-          <button
-            onClick={handleDeleteMultiple}
-            className="primary-main-btn hover:bg-opacity-80 transition-all duration-200 ease-in-out"
-          >
-            Bulk Delete
-          </button>
-          <button className="primary-main-btn hover:bg-opacity-80 transition-all duration-200 ease-in-out">
-            Filter
-          </button>
+          {ids?.length > 0 && (
+            <button
+              onClick={handleDeleteMultiple}
+              className="primary-main-btn bg-red-500 hover:bg-opacity-80 transition-all duration-200 ease-in-out"
+            >
+              Delete Selected
+            </button>
+          )}
+
+          <FilterDrawer setQuery={setQuery} query={query} />
         </div>
       </div>
       <hr className="border-primary-main my-[23px]" />

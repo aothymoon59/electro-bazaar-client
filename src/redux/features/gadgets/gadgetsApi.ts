@@ -10,6 +10,7 @@ const gadgetsApi = baseApi.injectEndpoints({
         method: "POST",
         body: gadgetInfo,
       }),
+      invalidatesTags: ["gadgets"],
     }),
     getGadgets: builder.query({
       query: (data?: any) => {
