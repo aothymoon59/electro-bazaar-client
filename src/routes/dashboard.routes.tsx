@@ -8,6 +8,7 @@ import { BiSolidAddToQueue } from "react-icons/bi";
 import { MdOutlineViewList } from "react-icons/md";
 import { BiSitemap } from "react-icons/bi";
 import { FaHistory } from "react-icons/fa";
+import UpdateGadget from "../pages/dashboard/UpdateGadget";
 
 export const dashboardPaths = [
   {
@@ -27,6 +28,12 @@ export const dashboardPaths = [
     path: "gadgets",
     element: <ManageGadget />,
     icon: <MdOutlineViewList />,
+  },
+  {
+    name: "",
+    path: "gadgets/update/:id",
+    element: <UpdateGadget />,
+    icon: "",
   },
   {
     name: "Sales Management",

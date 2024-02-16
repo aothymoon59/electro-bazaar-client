@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { TableRowSelection } from "antd/es/table/interface";
 import { DataSourceItemType } from "antd/es/auto-complete";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 interface GadgetData {
   _id: string;
@@ -114,10 +115,10 @@ const ManageGadget = () => {
       title: "Action 1",
       fixed: "right",
       width: 90,
-      render: () => (
-        <a>
+      render: (_text, record) => (
+        <Link to={`/gadgets/update/${record._id}`}>
           <FaEdit />
-        </a>
+        </Link>
       ),
     },
     {
