@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Result } from "antd";
-
+//Error page
 const ErrorPage = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
