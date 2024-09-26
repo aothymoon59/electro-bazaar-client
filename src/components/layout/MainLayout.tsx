@@ -40,7 +40,7 @@ const MainLayout = () => {
           </div>
         </Header>
         <Content
-          className="bg-purple-100 rounded-lg"
+          className="rounded-lg bg-primary-light"
           style={{ margin: "24px 16px 0" }}
         >
           <div

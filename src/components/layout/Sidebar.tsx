@@ -18,7 +18,7 @@ const Sidebar = () => {
       text: "Do you want to logout!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#8850B3",
+      confirmButtonColor: "#2A2F4F",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, logout!",
     }).then((result) => {
@@ -42,7 +42,7 @@ const Sidebar = () => {
       <div className="h-16 flex justify-center items-center">
         <div className="flex justify-center items-center gap-1 text-white">
           <img className="w-7 h-7" src={logo} alt="logo" />
-          <h1>ElectroMart</h1>
+          <h1>ElectroBazaar</h1>
         </div>
       </div>
       <Menu

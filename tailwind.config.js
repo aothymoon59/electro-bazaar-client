@@ -5,7 +5,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        "primary-main": "#8850B3",
+        // "primary-main": "#021224",
+        "primary-main": "#2A2F4F",
+        "primary-light": "#EAEAEC",
+        "primary-lighter": "#F7F7F7",
+        "primary-dark": "#0E0F27",
       },
       screens: {
         xs: "375px", // Custom breakpoint for screens >= 375px

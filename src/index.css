@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --primary-main: #2A2F4F;
+}
+
 
 * {
     margin: 0;
@@ -23,11 +27,11 @@ body {
 }
 
 .ant-layout-sider-zero-width-trigger {
-    background-color: #8850B3 !important;
+    background-color: var(--primary-main) !important;
 }
 
 .primary-main-btn {
-    @apply bg-[#8850B3] text-sm text-white py-2 px-4 rounded-xl font-semibold border-0 cursor-pointer
+    @apply bg-primary-main text-sm text-white py-2 px-4 rounded-xl font-semibold border-0 cursor-pointer
 }
 
 /* .custom-table .ant-table-thead>tr>th {

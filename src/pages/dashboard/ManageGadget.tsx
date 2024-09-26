@@ -47,7 +47,7 @@ const ManageGadget = () => {
         text: "Do you want to delete these gadgets!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#8850B3",
+        confirmButtonColor: "#2A2F4F",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete!",
       }).then((result: any) => {
@@ -73,7 +73,7 @@ const ManageGadget = () => {
         text: "Do you want to delete this gadget!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#8850B3",
+        confirmButtonColor: "#2A2F4F",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete!",
       }).then((result: any) => {

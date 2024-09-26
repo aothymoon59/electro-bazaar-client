@@ -75,7 +75,7 @@ const SalesManagement = () => {
             return (
               <div
                 key={_id}
-                className="card card-compact bg-[#e5caf9] shadow-md"
+                className="card card-compact bg-primary-lighter shadow-md"
               >
                 <div className="card-body">
                   <h2 className="card-title">{name}</h2>

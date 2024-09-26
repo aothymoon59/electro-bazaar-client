@@ -7,11 +7,11 @@ function App() {
       theme={{
         components: {
           Table: {
-            headerBg: "#8850B3",
-            headerColor: "white",
-            headerSortHoverBg: "#8850B3",
-            headerSortActiveBg: "#c17df5",
-            rowHoverBg: "#e5caf9",
+            headerBg: "#2A2F4F",
+            headerColor: "#ffffff",
+            headerSortHoverBg: "#021224",
+            headerSortActiveBg: "#0E0F27",
+            rowHoverBg: "#F7F7F7",
           },
         },
       }}

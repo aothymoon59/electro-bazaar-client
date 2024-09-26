@@ -23,7 +23,12 @@ const Login = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "moon@seopage1.net",
+      password: "12345678",
+    },
+  });
 
   const onSubmit = async (data: FieldValues) => {
     try {
