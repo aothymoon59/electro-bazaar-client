@@ -10,10 +10,13 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import DuplicateGadgetModal from "../../components/form/DuplicateGadgetModal";
+import EBInput from "../../components/ui/EBInput";
+import EBForm from "../../components/ui/EBForm";
 
+// TODO: need to work here
 const UpdateGadget = () => {
   const { id } = useParams();
-  const { data } = useGetSingleGadgetQuery(id);
+  const { data } = useGetSingleGadgetQuery(id, { skip: !id });
   const [updateGadget, { isLoading }] = useUpdateGadgetMutation();
   const {
     name,
@@ -30,6 +33,8 @@ const UpdateGadget = () => {
   } = data?.data || {};
   const { cameraResolution, storageCapacity } = features || {};
 
+  // console.log(data?.data);
+
   const [formattedReleaseDate, setFormattedReleaseDate] = useState("");
 
   useEffect(() => {
@@ -38,7 +43,22 @@ const UpdateGadget = () => {
     setFormattedReleaseDate(formattedDate);
   }, [releaseDate]);
 
-  const { register, handleSubmit } = useForm();
+  const defaultValues = {
+    name: name,
+    price: price,
+    quantity: quantity,
+    releaseDate: formattedReleaseDate,
+    brand: brand,
+    modelNumber: modelNumber,
+    category: category,
+    operatingSystem: operatingSystem,
+    connectivity: connectivity,
+    powerSource: powerSource,
+    cameraResolution: cameraResolution,
+    storageCapacity: storageCapacity,
+  };
+
+  // const { register, handleSubmit } = useForm();
 
   const onSubmit = async (formVal: FieldValues) => {
     try {
@@ -66,15 +86,15 @@ const UpdateGadget = () => {
     }
   };
 
-  const handlePreventWheel = (e: any) => {
-    e.target.addEventListener(
-      "wheel",
-      function (e: any) {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
-  };
+  // const handlePreventWheel = (e: any) => {
+  //   e.target.addEventListener(
+  //     "wheel",
+  //     function (e: any) {
+  //       e.preventDefault();
+  //     },
+  //     { passive: false }
+  //   );
+  // };
 
   return (
     <div className="w-full">
@@ -95,10 +115,17 @@ const UpdateGadget = () => {
         </button>
       </div>
       <hr className="border-primary-main my-[23px]" />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <EBForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {/* name  */}
-          <div className="form-control mb-4">
+          <EBInput
+            type="text"
+            name="name"
+            label="Name"
+            required
+            placeholder="Enter product name"
+          />
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Name*</span>
             </label>
@@ -109,9 +136,9 @@ const UpdateGadget = () => {
               defaultValue={name}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Price  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Price*</span>
             </label>
@@ -123,9 +150,9 @@ const UpdateGadget = () => {
               className="input input-bordered w-full"
               onFocus={(e) => handlePreventWheel(e)}
             />
-          </div>
+          </div> */}
           {/* quantity  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Quantity*</span>
             </label>
@@ -137,9 +164,9 @@ const UpdateGadget = () => {
               className="input input-bordered w-full"
               onFocus={(e) => handlePreventWheel(e)}
             />
-          </div>
+          </div> */}
           {/* release date  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Release Date*</span>
             </label>
@@ -151,9 +178,9 @@ const UpdateGadget = () => {
               placeholder="Enter Release Date here"
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Brand  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Brand*</span>
             </label>
@@ -164,9 +191,9 @@ const UpdateGadget = () => {
               defaultValue={brand}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Model Number  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Model Number*</span>
             </label>
@@ -177,9 +204,9 @@ const UpdateGadget = () => {
               defaultValue={modelNumber}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Category  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Category*</span>
             </label>
@@ -190,9 +217,9 @@ const UpdateGadget = () => {
               defaultValue={category}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Operating System  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Operating System</span>
             </label>
@@ -203,9 +230,9 @@ const UpdateGadget = () => {
               defaultValue={operatingSystem}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Connectivity  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Connectivity</span>
             </label>
@@ -216,9 +243,9 @@ const UpdateGadget = () => {
               defaultValue={connectivity}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Power Source  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Power Source</span>
             </label>
@@ -229,9 +256,9 @@ const UpdateGadget = () => {
               defaultValue={powerSource}
               className="input input-bordered w-full"
             />
-          </div>
+          </div> */}
           {/* Camera Resolution  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Camera Resolution</span>
             </label>
@@ -243,9 +270,9 @@ const UpdateGadget = () => {
               className="input input-bordered w-full"
               onFocus={(e) => handlePreventWheel(e)}
             />
-          </div>
+          </div> */}
           {/* Storage Capacity  */}
-          <div className="form-control mb-4">
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Storage Capacity</span>
             </label>
@@ -257,7 +284,7 @@ const UpdateGadget = () => {
               className="input input-bordered w-full"
               onFocus={(e) => handlePreventWheel(e)}
             />
-          </div>
+          </div>*/}
         </div>
 
         <button
@@ -273,7 +300,7 @@ const UpdateGadget = () => {
             "Update Gadget"
           )}
         </button>
-      </form>
+      </EBForm>
       <DuplicateGadgetModal gadget={data?.data || {}} />
     </div>
   );

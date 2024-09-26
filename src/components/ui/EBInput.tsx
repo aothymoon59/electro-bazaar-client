@@ -45,7 +45,7 @@ const EBInput = ({
       <Controller
         name={name}
         control={control}
-        rules={combinedRules} // Apply the conditionally set rules here
+        rules={combinedRules}
         render={({ field }) => (
           <Form.Item
             label={`${label}${required ? "*" : ""}`}

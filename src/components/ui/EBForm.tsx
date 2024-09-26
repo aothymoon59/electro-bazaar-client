@@ -40,7 +40,6 @@ const EBForm = ({
     if (isSubmitSuccess) {
       methods.reset();
     }
-    // methods.reset();
   };
 
   return (
