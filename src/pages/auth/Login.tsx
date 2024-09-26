@@ -9,6 +9,9 @@ import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { ImSpinner9 } from "react-icons/im";
+import { Input } from "antd";
+import { MdEmail } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
@@ -63,12 +66,12 @@ const Login = () => {
             <label className="label">
               <span className="label-text font-medium">Email*</span>
             </label>
-            <input
+            <Input
               type="email"
               {...register("email", { required: true })}
-              name="email"
               placeholder="example@gmail.com"
-              className="input input-bordered w-full"
+              size="large"
+              prefix={<MdEmail />}
             />
             {errors.email && (
               <span className="text-red-600 mt-2 text-xs">
@@ -80,24 +83,24 @@ const Login = () => {
             <label className="label">
               <span className="label-text font-medium">Password*</span>
             </label>
-            <input
+            <Input
               type={showPass ? "text" : "password"}
               {...register("password", {
                 required: true,
               })}
               name="password"
               placeholder="******"
-              className="input input-bordered w-full"
+              size="large"
+              prefix={<FaLock />}
+              suffix={
+                <p onClick={() => setShowPass(!showPass)}>
+                  <small>{showPass ? <FaEye /> : <FaEyeSlash />}</small>
+                </p>
+              }
             />
             {errors.password?.type === "required" && (
               <p className="text-red-600 mt-2 text-xs">Password is required</p>
             )}
-            <p
-              className="absolute top-[48px] right-[15px]"
-              onClick={() => setShowPass(!showPass)}
-            >
-              <small>{showPass ? <FaEye /> : <FaEyeSlash />}</small>
-            </p>
           </div>
           <button
             className={`primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out ${
