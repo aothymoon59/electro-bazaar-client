@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import { ImSpinner9 } from "react-icons/im";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { verifyToken } from "../../utils/verifyToken";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";

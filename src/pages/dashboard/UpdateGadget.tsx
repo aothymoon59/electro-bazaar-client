@@ -6,7 +6,7 @@ import {
 } from "../../redux/features/gadgets/gadgetsApi";
 import { ImSpinner9 } from "react-icons/im";
 import toast from "react-hot-toast";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import DuplicateGadgetModal from "../../components/form/DuplicateGadgetModal";
