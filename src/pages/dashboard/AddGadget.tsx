@@ -1,17 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
 import { useAddGadgetMutation } from "../../redux/features/gadgets/gadgetsApi";
+import EBInput from "../../components/ui/EBInput";
+import EBForm from "../../components/ui/EBForm";
+import EBSelect from "../../components/ui/EBSelect";
+import {
+  connectivityOptions,
+  operatingSystemOptions,
+  powerSourceOptions,
+  productCategoryOptions,
+} from "../../constants/products";
+import { useState } from "react";
 
 const AddGadget = () => {
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [addGadget, { isLoading }] = useAddGadgetMutation();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -19,35 +24,25 @@ const AddGadget = () => {
         name: data.name,
         price: parseFloat(data.price),
         quantity: parseInt(data.quantity),
-        releaseDate: data.release,
+        releaseDate: data.releaseDate,
         brand: data.brand,
-        modelNumber: data.model,
+        modelNumber: data.modelNumber,
         category: data.category,
-        operatingSystem: data.os,
+        operatingSystem: data.operatingSystem,
         connectivity: data.connectivity,
-        powerSource: data.power,
+        powerSource: data.powerSource,
         features: {
-          cameraResolution: parseFloat(data.camera),
-          storageCapacity: parseFloat(data.storage),
+          cameraResolution: parseFloat(data.cameraResolution) || undefined,
+          storageCapacity: parseFloat(data.storageCapacity) || undefined,
         },
       };
 
       const res = await addGadget(gadget).unwrap();
-      reset();
+      setIsSubmitSuccess(true);
       toast.success(res.message);
     } catch (error: any) {
       toast.error(error.data.message);
     }
-  };
-
-  const handlePreventWheel = (e: any) => {
-    e.target.addEventListener(
-      "wheel",
-      function (e: any) {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
   };
 
   return (
@@ -58,203 +53,99 @@ const AddGadget = () => {
         </h5>
       </div>
       <hr className="border-primary-main my-[23px]" />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <EBForm onSubmit={onSubmit} isSubmitSuccess={isSubmitSuccess}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {/* name  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Name*</span>
-            </label>
-            <input
-              type="text"
-              {...register("name", { required: true })}
-              name="name"
-              placeholder="Enter product name here"
-              className="input input-bordered w-full"
-            />
-            {errors.name && (
-              <span className="text-red-600 mt-2 text-xs">
-                Name is required
-              </span>
-            )}
-          </div>
+          <EBInput
+            type="text"
+            name="name"
+            label="Name"
+            required
+            placeholder="Enter product name"
+          />
           {/* Price  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Price*</span>
-            </label>
-            <input
-              type="number"
-              {...register("price", { required: true })}
-              name="price"
-              placeholder="Enter product price here"
-              className="input input-bordered w-full"
-              onFocus={(e) => handlePreventWheel(e)}
-            />
-            {errors.price && (
-              <span className="text-red-600 mt-2 text-xs">
-                Price is required
-              </span>
-            )}
-          </div>
+          <EBInput
+            type="number"
+            name="price"
+            label="Price"
+            required
+            placeholder="Enter product price"
+          />
           {/* quantity  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Quantity*</span>
-            </label>
-            <input
-              type="number"
-              {...register("quantity", { required: true })}
-              name="quantity"
-              placeholder="Enter product quantity here"
-              className="input input-bordered w-full"
-              onFocus={(e) => handlePreventWheel(e)}
-            />
-            {errors.quantity && (
-              <span className="text-red-600 mt-2 text-xs">
-                Quantity is required
-              </span>
-            )}
-          </div>
+          <EBInput
+            type="number"
+            name="quantity"
+            label="Quantity"
+            required
+            placeholder="Enter product quantity"
+          />
           {/* release date  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Release Date*</span>
-            </label>
-            <input
-              type="date"
-              {...register("release", { required: true })}
-              name="release"
-              placeholder="Enter Release Date here"
-              className="input input-bordered w-full"
-            />
-            {errors.release && (
-              <span className="text-red-600 mt-2 text-xs">
-                Release Date is required
-              </span>
-            )}
-          </div>
+          <EBInput
+            type="date"
+            name="releaseDate"
+            label="Release Date"
+            required
+            placeholder="Enter product release date"
+          />
           {/* Brand  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Brand*</span>
-            </label>
-            <input
-              type="text"
-              {...register("brand", { required: true })}
-              name="brand"
-              placeholder="Enter product brand here"
-              className="input input-bordered w-full"
-            />
-            {errors.brand && (
-              <span className="text-red-600 mt-2 text-xs">
-                Brand is required
-              </span>
-            )}
-          </div>
-          {/* Model Number  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Model Number*</span>
-            </label>
-            <input
-              type="text"
-              {...register("model", { required: true })}
-              name="model"
-              placeholder="Enter product model here"
-              className="input input-bordered w-full"
-            />
-            {errors.model && (
-              <span className="text-red-600 mt-2 text-xs">
-                Model is required
-              </span>
-            )}
-          </div>
+          <EBInput
+            type="text"
+            name="brand"
+            label="Brand"
+            required
+            placeholder="Enter product brand"
+          />
+          {/* Model  */}
+          <EBInput
+            type="text"
+            name="modelNumber"
+            label="Model"
+            required
+            placeholder="Enter product model"
+          />
           {/* Category  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Category*</span>
-            </label>
-            <input
-              type="text"
-              {...register("category", { required: true })}
-              name="category"
-              placeholder="Enter product category here"
-              className="input input-bordered w-full"
-            />
-            {errors.category && (
-              <span className="text-red-600 mt-2 text-xs">
-                Category is required
-              </span>
-            )}
-          </div>
+          <EBSelect
+            label="Category"
+            name="category"
+            options={productCategoryOptions}
+            placeholder="Select product category"
+            required
+          />
           {/* Operating System  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Operating System</span>
-            </label>
-            <input
-              type="text"
-              {...register("os")}
-              name="os"
-              placeholder="Enter product Operating System here"
-              className="input input-bordered w-full"
-            />
-          </div>
+          <EBSelect
+            label="Operating System"
+            name="operatingSystem"
+            options={operatingSystemOptions}
+            placeholder="Select product operating system"
+          />
           {/* Connectivity  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Connectivity</span>
-            </label>
-            <input
-              type="text"
-              {...register("connectivity")}
-              name="connectivity"
-              placeholder="Enter product connectivity here"
-              className="input input-bordered w-full"
-            />
-          </div>
+          <EBSelect
+            label="Connectivity"
+            name="connectivity"
+            options={connectivityOptions}
+            placeholder="Select product connectivity"
+          />
           {/* Power Source  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Power Source</span>
-            </label>
-            <input
-              type="text"
-              {...register("power")}
-              name="power"
-              placeholder="Enter product Power Source here"
-              className="input input-bordered w-full"
-            />
-          </div>
+          <EBSelect
+            label="Power Source"
+            name="powerSource"
+            options={powerSourceOptions}
+            placeholder="Select product power source"
+          />
           {/* Camera Resolution  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Camera Resolution</span>
-            </label>
-            <input
-              type="number"
-              {...register("camera")}
-              name="camera"
-              placeholder="Enter product Camera Resolution here"
-              className="input input-bordered w-full"
-              onFocus={(e) => handlePreventWheel(e)}
-            />
-          </div>
+          <EBInput
+            type="number"
+            name="cameraResolution"
+            label="Camera Resolution"
+            placeholder="Enter Camera Resolution"
+          />
           {/* Storage Capacity  */}
-          <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Storage Capacity</span>
-            </label>
-            <input
-              type="number"
-              {...register("storage")}
-              name="storage"
-              placeholder="Enter product Storage Capacity here"
-              className="input input-bordered w-full"
-              onFocus={(e) => handlePreventWheel(e)}
-            />
-          </div>
+          <EBInput
+            type="number"
+            name="storageCapacity"
+            label="Storage Capacity"
+            placeholder="Enter Storage Capacity"
+          />
         </div>
 
         <button
@@ -270,7 +161,7 @@ const AddGadget = () => {
             "Add Product"
           )}
         </button>
-      </form>
+      </EBForm>
     </div>
   );
 };

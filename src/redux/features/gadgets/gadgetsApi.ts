@@ -55,12 +55,14 @@ const gadgetsApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["gadgets"],
     }),
     getSingleGadget: builder.query({
       query: (id) => ({
         url: `/products/get-product/${id}`,
         method: "GET",
       }),
+      providesTags: ["gadgets"],
     }),
     updateGadget: builder.mutation({
       query: ({ id, payload }) => ({
