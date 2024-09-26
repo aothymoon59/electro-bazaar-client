@@ -15,7 +15,7 @@ import EBInput from "../../components/ui/EBInput";
 import EBForm from "../../components/ui/EBForm";
 
 const Login = () => {
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +33,7 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user, token: res.data.accessToken }));
-      setSubmitSuccess(true);
+      setIsSubmitSuccess(true);
       toast.success(res.message);
       navigate(from, { replace: true });
     } catch (error: any) {
@@ -51,7 +51,7 @@ const Login = () => {
           </h2>
           <p className="text-sm">Please enter your credentials to login</p>
         </div>
-        <EBForm onSubmit={onSubmit} submitSuccess={submitSuccess}>
+        <EBForm onSubmit={onSubmit} isSubmitSuccess={isSubmitSuccess}>
           <EBInput
             type="email"
             name="email"

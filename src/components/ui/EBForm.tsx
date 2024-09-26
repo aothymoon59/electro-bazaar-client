@@ -16,7 +16,7 @@ type TFormConfig = {
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
-  submitSuccess?: boolean;
+  isSubmitSuccess?: boolean;
 } & TFormConfig;
 
 const EBForm = ({
@@ -24,7 +24,7 @@ const EBForm = ({
   children,
   defaultValues,
   resolver,
-  submitSuccess,
+  isSubmitSuccess,
 }: TFormProps) => {
   const formConfig: TFormConfig = {};
   if (defaultValues) {
@@ -37,8 +37,7 @@ const EBForm = ({
 
   const submit: SubmitHandler<FieldValues> = (data) => {
     onSubmit(data);
-    console.log(methods, data);
-    if (submitSuccess) {
+    if (isSubmitSuccess) {
       methods.reset();
     }
     // methods.reset();

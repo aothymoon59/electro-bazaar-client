@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa";
 import { ImSpinner9 } from "react-icons/im";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
@@ -9,8 +9,12 @@ import { verifyToken } from "../../utils/verifyToken";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";
 import toast from "react-hot-toast";
+import EBForm from "../../components/ui/EBForm";
+import EBInput from "../../components/ui/EBInput";
+import { MdEmail } from "react-icons/md";
 
 const Register = () => {
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,12 +22,12 @@ const Register = () => {
   const dispatch = useAppDispatch();
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   reset,
+  //   formState: { errors },
+  // } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -36,7 +40,8 @@ const Register = () => {
       const res = await registerUser(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken);
       dispatch(setUser({ user, token: res.data.accessToken }));
-      reset();
+      // reset();
+      setIsSubmitSuccess(true);
       toast.success(res.message);
       navigate(from, { replace: true });
     } catch (error: any) {
@@ -45,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="lg:p-3 min-h-screen flex justify-center items-center bg-primary-light lg:bg-transparent">
+    <div className="lg:p-3 min-h-screen flex justify-center items-center bg-primary-lighter lg:bg-transparent">
       <div className="bg-primary-lighter p-5 rounded-md sm:shadow-md w-full max-w-[400px]">
         <div className="text-center mb-5">
           <h2 className="text-xl font-normal mb-2">
@@ -54,8 +59,41 @@ const Register = () => {
           </h2>
           <p className="text-sm">Please enter your details for register</p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-control mb-4">
+        <EBForm onSubmit={onSubmit} isSubmitSuccess={isSubmitSuccess}>
+          <EBInput
+            type="text"
+            name="name"
+            label="Name"
+            required
+            prefix={<FaUser />}
+            placeholder="Enter your name"
+          />
+          <EBInput
+            type="email"
+            name="email"
+            label="Email"
+            required
+            prefix={<MdEmail />}
+            placeholder="example@gmail.com"
+          />
+          <EBInput
+            type="password"
+            name="password"
+            label="Password"
+            required
+            prefix={<FaLock />}
+            placeholder="******"
+            suffix={
+              <p
+                onClick={() => setShowPass(!showPass)}
+                className="cursor-pointer"
+              >
+                <small>{showPass ? <FaEye /> : <FaEyeSlash />}</small>
+              </p>
+            }
+            showPass={showPass}
+          />
+          {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Name*</span>
             </label>
@@ -111,7 +149,7 @@ const Register = () => {
             >
               <small>{showPass ? <FaEye /> : <FaEyeSlash />}</small>
             </p>
-          </div>
+          </div> */}
           <button
             className={`primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out ${
               isLoading && "cursor-not-allowed"
@@ -133,7 +171,7 @@ const Register = () => {
               </Link>
             </small>
           </p>
-        </form>
+        </EBForm>
       </div>
     </div>
   );
