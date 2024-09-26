@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
-import { Spin } from "antd";
+import { Input, Spin } from "antd";
 import SalesManagementModal from "../../components/form/SalesManagementModal";
 import EmptyState from "../../components/ui/EmptyState";
 
@@ -39,17 +39,12 @@ const SalesManagement = () => {
         </h5>
         {/* search  */}
         <div className="relative w-full max-w-[460px]">
-          <input
-            onChange={(e) => handleSearch(e)}
-            type="text"
-            name="search"
-            className="input input-bordered w-full pl-9"
+          <Input
             placeholder="Search"
+            prefix={<FiSearch />}
+            size="large"
+            onChange={(e) => handleSearch(e)}
           />
-          <span className="absolute bottom-[11px] left-2">
-            {" "}
-            <FiSearch className="text-lg" />{" "}
-          </span>
         </div>
       </div>
       <hr className="border-primary-main my-[23px]" />
