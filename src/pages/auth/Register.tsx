@@ -50,7 +50,7 @@ const Register = () => {
         <div className="text-center mb-5">
           <h2 className="text-xl font-normal mb-2">
             Welcome To{" "}
-            <span className="font-bold text-primary-main">ElectroMart</span>
+            <span className="font-bold text-primary-main">ElectroBazaar</span>
           </h2>
           <p className="text-sm">Please enter your details for register</p>
         </div>
