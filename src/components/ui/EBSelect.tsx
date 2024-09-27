@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ConfigProviderProps, Form, Select, Skeleton } from "antd";
+import { Form, Select, Skeleton } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 
-type SizeType = ConfigProviderProps["componentSize"];
 type TEBSelectProps = {
-  label?: string;
-  name?: string;
+  label: string;
+  name: string;
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
   disabled?: boolean;
   placeholder?: string;
@@ -13,8 +11,6 @@ type TEBSelectProps = {
   rules?: object;
   isLoading?: boolean;
   isUpdating?: boolean;
-  size?: SizeType;
-  onChange?: (value: any) => void;
 };
 
 const EBSelect = ({
@@ -27,8 +23,6 @@ const EBSelect = ({
   rules = {},
   isLoading,
   isUpdating,
-  size = "large",
-  onChange,
 }: TEBSelectProps) => {
   const {
     control,
@@ -65,10 +59,9 @@ const EBSelect = ({
               style={{ width: "100%" }}
               {...field}
               options={options}
-              size={size}
+              size="large"
               disabled={disabled || isUpdating}
               status={error ? "error" : undefined}
-              onChange={onChange}
             />
           )}
         </Form.Item>
