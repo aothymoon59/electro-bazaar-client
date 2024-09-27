@@ -46,7 +46,7 @@ const Sidebar = () => {
         </div>
       </div>
       <Menu
-        className="bg-primary-main max-h-[87vh] overflow-y-auto"
+        className="bg-primary-main sider max-h-[80vh] overflow-y-auto"
         mode="inline"
         defaultSelectedKeys={["4"]}
         items={sidebarItemsGenerator(dashboardPaths)}

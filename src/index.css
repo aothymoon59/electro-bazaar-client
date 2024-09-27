@@ -24,7 +24,6 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Apply specific styles to the webkit scrollbar */
 *::-webkit-scrollbar {
     width: 10px;
     scroll-behavior: smooth;
@@ -36,6 +35,19 @@ body {
 
 *::-webkit-scrollbar-track {
     background-color: transparent;
+}
+
+
+
+/* Hide scrollbar in WebKit browsers (Chrome, Safari) */
+.sider::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar in Firefox */
+.sider {
+    scrollbar-width: none;
+    /* For Firefox */
 }
 
 .ant-menu-title-content {

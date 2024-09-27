@@ -39,16 +39,8 @@ const MainLayout = () => {
             <span className="text-[15px]">{user?.name?.split(" ")?.[0]}</span>
           </div>
         </Header>
-        <Content
-          className="rounded-lg bg-primary-light max-h-screen overflow-y-auto"
-          style={{ margin: "24px 16px 0" }}
-        >
-          <div
-            style={{
-              padding: 16,
-              minHeight: 360,
-            }}
-          >
+        <Content className="rounded-lg p-[24px_16px_0px] bg-primary-lighter max-h-screen overflow-y-auto">
+          <div className="p-4 min-h-[85vh] bg-primary-light rounded-lg">
             <Outlet />
           </div>
         </Content>
