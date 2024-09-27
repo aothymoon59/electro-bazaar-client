@@ -90,7 +90,7 @@ const CloneGadgetModal = ({
 
   return (
     <EBModal
-      title="Create a variant"
+      title="Create a variant of this product"
       isModalOpen={isModalOpen}
       setIsModalOpen={setIsModalOpen}
       modalWidth={1200}
