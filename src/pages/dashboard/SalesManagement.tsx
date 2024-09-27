@@ -3,9 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
-import { Input, Spin } from "antd";
-import SalesManagementModal from "../../components/form/SalesManagementModal";
-import EmptyState from "../../components/ui/EmptyState";
+import { Empty, Input, Spin } from "antd";
 import EbButton from "../../components/ui/EbButton";
 import SalesManageModal from "../../components/modals/SalesManageModal";
 
@@ -56,7 +54,11 @@ const SalesManagement = () => {
           <Spin spinning={true}></Spin>
         </div>
       )}
-      {data?.data?.length === 0 && <EmptyState message="No data found" />}
+      {data?.data?.length === 0 && (
+        <div className="w-full h-[70vh] flex justify-center items-center">
+          <Empty />
+        </div>
+      )}
       <div className="grid md:grid-cols-3 gap-5">
         {Array.isArray(data?.data) &&
           data?.data?.map((gadget: any) => {
@@ -103,19 +105,6 @@ const SalesManagement = () => {
                     {category}
                   </p>
                   <div className="card-actions justify-end mt-3">
-                    {/* <button
-                      onClick={() => {
-                        const salesManagementModal = document.getElementById(
-                          "salesManagementModal"
-                        ) as HTMLDialogElement | null;
-                        salesManagementModal?.showModal();
-                        setGadgetId(_id);
-                        setLimit(quantity);
-                      }}
-                      className="primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out"
-                    >
-                      Sell Now
-                    </button> */}
                     <EbButton
                       className="primary-main-btn w-full"
                       onClick={() => {
@@ -132,16 +121,10 @@ const SalesManagement = () => {
             );
           })}
       </div>
-      {/* <SalesManagementModal
-        gadgetId={gadgetId}
-        refetch={refetch}
-        limit={limit}
-      /> */}
       <SalesManageModal
         isModalOpen={isSalesManagementModalOpen}
         setIsModalOpen={setIsSalesManagementModalOpen}
         gadgetId={gadgetId}
-        // refetch={refetch}
         limit={limit}
       />
     </div>
