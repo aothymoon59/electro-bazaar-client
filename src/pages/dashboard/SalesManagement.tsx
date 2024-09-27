@@ -6,8 +6,12 @@ import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Input, Spin } from "antd";
 import SalesManagementModal from "../../components/form/SalesManagementModal";
 import EmptyState from "../../components/ui/EmptyState";
+import EbButton from "../../components/ui/EbButton";
+import SalesManageModal from "../../components/modals/SalesManageModal";
 
 const SalesManagement = () => {
+  const [isSalesManagementModalOpen, setIsSalesManagementModalOpen] =
+    useState(false);
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [gadgetId, setGadgetId] = useState("");
@@ -24,8 +28,7 @@ const SalesManagement = () => {
     };
   }, [searchText]);
 
-  const { data, refetch, isLoading } =
-    useGetAllGadgetsQuery(debouncedSearchText);
+  const { data, isLoading } = useGetAllGadgetsQuery(debouncedSearchText);
 
   const handleSearch = (e: any) => {
     setSearchText(e.target.value);
@@ -100,7 +103,7 @@ const SalesManagement = () => {
                     {category}
                   </p>
                   <div className="card-actions justify-end mt-3">
-                    <button
+                    {/* <button
                       onClick={() => {
                         const salesManagementModal = document.getElementById(
                           "salesManagementModal"
@@ -112,16 +115,33 @@ const SalesManagement = () => {
                       className="primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out"
                     >
                       Sell Now
-                    </button>
+                    </button> */}
+                    <EbButton
+                      className="primary-main-btn w-full"
+                      onClick={() => {
+                        setIsSalesManagementModalOpen(true);
+                        setGadgetId(_id);
+                        setLimit(quantity);
+                      }}
+                    >
+                      Sell Now
+                    </EbButton>
                   </div>
                 </div>
               </div>
             );
           })}
       </div>
-      <SalesManagementModal
+      {/* <SalesManagementModal
         gadgetId={gadgetId}
         refetch={refetch}
+        limit={limit}
+      /> */}
+      <SalesManageModal
+        isModalOpen={isSalesManagementModalOpen}
+        setIsModalOpen={setIsSalesManagementModalOpen}
+        gadgetId={gadgetId}
+        // refetch={refetch}
         limit={limit}
       />
     </div>

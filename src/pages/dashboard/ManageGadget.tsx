@@ -98,6 +98,7 @@ const ManageGadget = () => {
       title: "Sl NO.",
       dataIndex: "key",
       key: "key",
+      width: 100,
       render: (_text, _record, index) => index + 1,
     },
     {

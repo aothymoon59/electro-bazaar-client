@@ -14,6 +14,8 @@ type TInputProps = {
   defaultValue?: string;
   isLoading?: boolean;
   isUpdating?: boolean;
+  min?: number;
+  max?: number;
 };
 
 const EBInput = ({
@@ -28,6 +30,8 @@ const EBInput = ({
   placeholder,
   isLoading,
   isUpdating,
+  min,
+  max,
 }: TInputProps) => {
   const {
     control,
@@ -69,6 +73,8 @@ const EBInput = ({
                 suffix={suffix}
                 placeholder={placeholder}
                 disabled={isUpdating}
+                min={min}
+                max={max}
               />
             )}
           </Form.Item>
