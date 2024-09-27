@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input, Skeleton } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 
 type TInputProps = {
@@ -11,6 +11,9 @@ type TInputProps = {
   prefix?: React.ReactNode;
   showPass?: boolean;
   placeholder?: string;
+  defaultValue?: string;
+  isLoading?: boolean;
+  isUpdating?: boolean;
 };
 
 const EBInput = ({
@@ -23,6 +26,8 @@ const EBInput = ({
   prefix,
   showPass,
   placeholder,
+  isLoading,
+  isUpdating,
 }: TInputProps) => {
   const {
     control,
@@ -52,15 +57,20 @@ const EBInput = ({
             validateStatus={errors[name] ? "error" : ""}
             help={errorMessage} // Pass the string error message safely
           >
-            <Input
-              {...field}
-              type={showPass ? "text" : type}
-              id={name}
-              size="large"
-              prefix={prefix}
-              suffix={suffix}
-              placeholder={placeholder}
-            />
+            {isLoading ? (
+              <Skeleton.Input active size={"large"} block />
+            ) : (
+              <Input
+                {...field}
+                type={showPass ? "text" : type}
+                id={name}
+                size="large"
+                prefix={prefix}
+                suffix={suffix}
+                placeholder={placeholder}
+                disabled={isUpdating}
+              />
+            )}
           </Form.Item>
         )}
       />

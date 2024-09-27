@@ -16,8 +16,11 @@ import EBForm from "../../components/ui/EBForm";
 // TODO: need to work here
 const UpdateGadget = () => {
   const { id } = useParams();
-  const { data } = useGetSingleGadgetQuery(id, { skip: !id });
-  const [updateGadget, { isLoading }] = useUpdateGadgetMutation();
+  const { data, isLoading: isGadgetLoading } = useGetSingleGadgetQuery(id, {
+    skip: !id,
+  });
+  const [updateGadget, { isLoading: isGadgetUpdating }] =
+    useUpdateGadgetMutation();
   const {
     name,
     price,
@@ -60,22 +63,41 @@ const UpdateGadget = () => {
 
   // const { register, handleSubmit } = useForm();
 
+  /* const gadget = {
+    name: data.name,
+    price: parseFloat(data.price),
+    quantity: parseInt(data.quantity),
+    releaseDate: data.releaseDate,
+    brand: data.brand,
+    modelNumber: data.modelNumber,
+    category: data.category,
+    operatingSystem: data.operatingSystem,
+    connectivity: data.connectivity,
+    powerSource: data.powerSource,
+    features: {
+      cameraResolution: parseFloat(data.cameraResolution) || undefined,
+      storageCapacity: parseFloat(data.storageCapacity) || undefined,
+    },
+  }; */
+
   const onSubmit = async (formVal: FieldValues) => {
     try {
       const gadget = {
         name: formVal.name || name,
         price: parseFloat(formVal.price) || price,
         quantity: parseInt(formVal.quantity) || quantity,
-        releaseDate: formVal.release || releaseDate,
+        releaseDate: formVal.releaseDate || releaseDate,
         brand: formVal.brand || brand,
-        modelNumber: formVal.model || modelNumber,
+        modelNumber: formVal.modelNumber || modelNumber,
         category: formVal.category || category,
-        operatingSystem: formVal.os || operatingSystem,
+        operatingSystem: formVal.operatingSystem || operatingSystem,
         connectivity: formVal.connectivity || connectivity,
-        powerSource: formVal.power || powerSource,
+        powerSource: formVal.powerSource || powerSource,
         features: {
-          cameraResolution: parseFloat(formVal.camera) || cameraResolution,
-          storageCapacity: parseFloat(formVal.storage) || storageCapacity,
+          cameraResolution:
+            parseFloat(formVal.cameraResolution) || cameraResolution,
+          storageCapacity:
+            parseFloat(formVal.storageCapacity) || storageCapacity,
         },
       };
 
@@ -115,7 +137,11 @@ const UpdateGadget = () => {
         </button>
       </div>
       <hr className="border-primary-main my-[23px]" />
-      <EBForm onSubmit={onSubmit} defaultValues={defaultValues}>
+      <EBForm
+        onSubmit={onSubmit}
+        defaultValues={defaultValues}
+        isGadgetLoading={isGadgetLoading}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {/* name  */}
           <EBInput
@@ -124,20 +150,20 @@ const UpdateGadget = () => {
             label="Name"
             required
             placeholder="Enter product name"
+            isLoading={isGadgetLoading}
+            isUpdating={isGadgetUpdating}
           />
-          {/* <div className="form-control mb-4">
-            <label className="label">
-              <span className="label-text font-medium">Name*</span>
-            </label>
-            <input
-              type="text"
-              {...register("name", { required: false })}
-              name="name"
-              defaultValue={name}
-              className="input input-bordered w-full"
-            />
-          </div> */}
           {/* Price  */}
+          <EBInput
+            type="number"
+            name="price"
+            label="Price"
+            required
+            placeholder="Enter product price"
+            defaultValue={name}
+            isLoading={isGadgetLoading}
+            isUpdating={isGadgetUpdating}
+          />
           {/* <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Price*</span>
@@ -289,12 +315,12 @@ const UpdateGadget = () => {
 
         <button
           className={`primary-main-btn w-full hover:bg-opacity-80 transition-all duration-200 ease-in-out ${
-            isLoading && "cursor-not-allowed"
+            isGadgetUpdating && "cursor-not-allowed"
           }`}
-          disabled={isLoading}
+          disabled={isGadgetUpdating}
           type="submit"
         >
-          {isLoading ? (
+          {isGadgetUpdating ? (
             <ImSpinner9 className="m-auto animate-spin" />
           ) : (
             "Update Gadget"
