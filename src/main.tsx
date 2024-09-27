@@ -8,6 +8,7 @@ import router from "./routes/routes.tsx";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "react-hot-toast";
 import { ConfigProvider } from "antd";
+import { Analytics } from "@vercel/analytics/react";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <PersistGate loading={null} persistor={persistor}>
           <RouterProvider router={router} />
           <Toaster />
+          <Analytics />
         </PersistGate>
       </ConfigProvider>
     </Provider>
