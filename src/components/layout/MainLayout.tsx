@@ -24,11 +24,11 @@ const MainLayout = () => {
   }, []);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="h-screen">
       <Sidebar />
       <Layout>
         <Header
-          className="bg-primary-main flex justify-end sm:justify-between items-center gap-2"
+          className="bg-primary-main flex justify-end sm:justify-between items-center gap-2 sticky top-0 z-10"
           style={{ padding: "0 20px" }}
         >
           <div className="hidden sm:block">
@@ -40,7 +40,7 @@ const MainLayout = () => {
           </div>
         </Header>
         <Content
-          className="rounded-lg bg-primary-light"
+          className="rounded-lg bg-primary-light max-h-screen overflow-y-auto"
           style={{ margin: "24px 16px 0" }}
         >
           <div

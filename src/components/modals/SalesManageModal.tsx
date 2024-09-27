@@ -65,15 +65,15 @@ const SalesManageModal = ({
           name="buyerName"
           label="Name"
           required
-          placeholder="Enter buyer name"
+          placeholder="Name of the buyer"
           isUpdating={addSaleIsLoading}
         />
         <EBInput
           type="date"
           name="buyDate"
-          label="Buy Date"
+          label="Sell Date"
           required
-          placeholder="Enter buy date"
+          placeholder="Date of the sale"
         />
         <EbButton
           isLoading={addSaleIsLoading}
