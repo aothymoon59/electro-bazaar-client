@@ -1,34 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useParams } from "react-router-dom";
-import {
-  useGetSingleGadgetQuery,
-  useUpdateGadgetMutation,
-} from "../../redux/features/gadgets/gadgetsApi";
 import toast from "react-hot-toast";
+import EbButton from "../ui/EbButton";
+import EBForm from "../ui/EBForm";
+import EBInput from "../ui/EBInput";
+import EBModal, { EBModalProps } from "../ui/EBModal";
 import { FieldValues } from "react-hook-form";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import EBInput from "../../components/ui/EBInput";
-import EBForm from "../../components/ui/EBForm";
-import EBSelect from "../../components/ui/EBSelect";
+import { useAddGadgetMutation } from "../../redux/features/gadgets/gadgetsApi";
+import EBSelect from "../ui/EBSelect";
 import {
   connectivityOptions,
   operatingSystemOptions,
   powerSourceOptions,
   productCategoryOptions,
 } from "../../constants/products";
-import EbButton from "../../components/ui/EbButton";
-import CloneGadgetModal from "../../components/modals/CloneGadgetModal";
 
-const UpdateGadget = () => {
-  const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
-  const [duplicateModalData, setDuplicateModalData] = useState({});
-  const { id } = useParams();
-  const { data, isLoading: isGadgetLoading } = useGetSingleGadgetQuery(id, {
-    skip: !id,
-  });
-  const [updateGadget, { isLoading: isGadgetUpdating }] =
-    useUpdateGadgetMutation();
+const CloneGadgetModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  modalData,
+}: EBModalProps) => {
+  const [addGadget, { isLoading: addGadgetIsLoading }] = useAddGadgetMutation();
+
   const {
     name,
     price,
@@ -41,7 +35,7 @@ const UpdateGadget = () => {
     connectivity,
     powerSource,
     features,
-  } = data?.data || {};
+  } = modalData || {};
   const { cameraResolution, storageCapacity } = features || {};
 
   const [formattedReleaseDate, setFormattedReleaseDate] = useState("");
@@ -81,39 +75,27 @@ const UpdateGadget = () => {
         connectivity: formVal.connectivity,
         powerSource: formVal.powerSource,
         features: {
-          cameraResolution: parseFloat(formVal.cameraResolution),
-          storageCapacity: parseFloat(formVal.storageCapacity),
+          cameraResolution: parseFloat(formVal.cameraResolution) || undefined,
+          storageCapacity: parseFloat(formVal.storageCapacity) || undefined,
         },
       };
 
-      const res = await updateGadget({ id, payload: gadget }).unwrap();
-      toast.success(res.message);
+      await addGadget(gadget).unwrap();
+      setIsModalOpen(false);
+      toast.success("Create variant successfully");
     } catch (error: any) {
       toast.error(error.data.message);
     }
   };
 
-  const handleCloneGadget = (gadget: any) => {
-    setIsDuplicateModalOpen(true);
-    setDuplicateModalData(gadget);
-  };
-
   return (
-    <div className="w-full">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-          Update Gadget
-        </h5>
-        <EbButton onClick={() => handleCloneGadget(data?.data)}>
-          Create Variant
-        </EbButton>
-      </div>
-      <hr className="border-primary-main my-[23px]" />
-      <EBForm
-        onSubmit={onSubmit}
-        defaultValues={defaultValues}
-        isGadgetLoading={isGadgetLoading}
-      >
+    <EBModal
+      title="Create a variant"
+      isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      modalWidth={1200}
+    >
+      <EBForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {/* name  */}
           <EBInput
@@ -122,8 +104,7 @@ const UpdateGadget = () => {
             label="Name"
             required
             placeholder="Enter product name"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Price  */}
           <EBInput
@@ -132,8 +113,7 @@ const UpdateGadget = () => {
             label="Price"
             required
             placeholder="Enter product price"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* quantity  */}
           <EBInput
@@ -142,8 +122,7 @@ const UpdateGadget = () => {
             label="Quantity"
             required
             placeholder="Enter product quantity"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* release date  */}
           <EBInput
@@ -152,8 +131,7 @@ const UpdateGadget = () => {
             label="Release Date"
             required
             placeholder="Enter product release date"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Brand  */}
           <EBInput
@@ -162,8 +140,7 @@ const UpdateGadget = () => {
             label="Brand"
             required
             placeholder="Enter product brand"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Model  */}
           <EBInput
@@ -172,8 +149,7 @@ const UpdateGadget = () => {
             label="Model"
             required
             placeholder="Enter product model"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Category  */}
           <EBSelect
@@ -182,8 +158,7 @@ const UpdateGadget = () => {
             options={productCategoryOptions}
             placeholder="Select product category"
             required
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Operating System  */}
           <EBSelect
@@ -191,8 +166,7 @@ const UpdateGadget = () => {
             name="operatingSystem"
             options={operatingSystemOptions}
             placeholder="Select product operating system"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Connectivity  */}
           <EBSelect
@@ -200,8 +174,7 @@ const UpdateGadget = () => {
             name="connectivity"
             options={connectivityOptions}
             placeholder="Select product connectivity"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Power Source  */}
           <EBSelect
@@ -209,8 +182,7 @@ const UpdateGadget = () => {
             name="powerSource"
             options={powerSourceOptions}
             placeholder="Select product power source"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Camera Resolution  */}
           <EBInput
@@ -218,8 +190,7 @@ const UpdateGadget = () => {
             name="cameraResolution"
             label="Camera Resolution"
             placeholder="Enter Camera Resolution"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
           {/* Storage Capacity  */}
           <EBInput
@@ -227,26 +198,20 @@ const UpdateGadget = () => {
             name="storageCapacity"
             label="Storage Capacity"
             placeholder="Enter Storage Capacity"
-            isLoading={isGadgetLoading}
-            isUpdating={isGadgetUpdating}
+            isUpdating={addGadgetIsLoading}
           />
         </div>
 
         <EbButton
-          isLoading={isGadgetUpdating}
+          isLoading={addGadgetIsLoading}
           type="submit"
           className="custom-class w-full"
         >
-          Update Gadget
+          Create Variant
         </EbButton>
       </EBForm>
-      <CloneGadgetModal
-        isModalOpen={isDuplicateModalOpen}
-        setIsModalOpen={setIsDuplicateModalOpen}
-        modalData={duplicateModalData || {}}
-      />
-    </div>
+    </EBModal>
   );
 };
 
-export default UpdateGadget;
+export default CloneGadgetModal;

@@ -46,7 +46,7 @@ const EBInput = ({
     : undefined;
 
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div>
       <Controller
         name={name}
         control={control}

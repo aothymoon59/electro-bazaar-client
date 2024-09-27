@@ -1,4 +1,4 @@
-import { Form, Select } from "antd";
+import { Form, Select, Skeleton } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 
 type TEBSelectProps = {
@@ -9,6 +9,8 @@ type TEBSelectProps = {
   placeholder?: string;
   required?: boolean;
   rules?: object;
+  isLoading?: boolean;
+  isUpdating?: boolean;
 };
 
 const EBSelect = ({
@@ -19,6 +21,8 @@ const EBSelect = ({
   placeholder,
   required,
   rules = {},
+  isLoading,
+  isUpdating,
 }: TEBSelectProps) => {
   const {
     control,
@@ -47,15 +51,19 @@ const EBSelect = ({
           validateStatus={errors[name] ? "error" : ""}
           help={errorMessage} // Pass the string error message safely
         >
-          <Select
-            placeholder={placeholder}
-            style={{ width: "100%" }}
-            {...field}
-            options={options}
-            size="large"
-            disabled={disabled}
-            status={error ? "error" : undefined}
-          />
+          {isLoading ? (
+            <Skeleton.Input active size={"large"} block />
+          ) : (
+            <Select
+              placeholder={placeholder}
+              style={{ width: "100%" }}
+              {...field}
+              options={options}
+              size="large"
+              disabled={disabled || isUpdating}
+              status={error ? "error" : undefined}
+            />
+          )}
         </Form.Item>
       )}
     />
