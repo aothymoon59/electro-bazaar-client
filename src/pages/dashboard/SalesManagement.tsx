@@ -26,7 +26,10 @@ const SalesManagement = () => {
     };
   }, [searchText]);
 
-  const { data, isLoading } = useGetAllGadgetsQuery(debouncedSearchText);
+  const { data, isLoading } = useGetAllGadgetsQuery([
+    // { name: "page", value: page },
+    { name: "searchTerm", value: debouncedSearchText },
+  ]);
 
   const handleSearch = (e: any) => {
     setSearchText(e.target.value);

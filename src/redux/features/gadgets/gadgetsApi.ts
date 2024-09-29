@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { TQueryParam } from "../../../types/global";
 import { baseApi } from "../../api/baseApi";
 
 const gadgetsApi = baseApi.injectEndpoints({
@@ -43,16 +44,21 @@ const gadgetsApi = baseApi.injectEndpoints({
     }),
 
     getAllGadgets: builder.query({
-      query: (searchText) => {
-        if (searchText) {
-          searchText = `searchTerms=${searchText}`;
-        } else {
-          searchText = "";
+      query: (args: any) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            if (item?.value) {
+              params.append(item.name, item.value as string);
+            }
+          });
         }
 
         return {
-          url: `/products/get-products?${searchText}`,
+          url: `/products/get-products`,
           method: "GET",
+          params: params,
         };
       },
       providesTags: ["gadgets"],
