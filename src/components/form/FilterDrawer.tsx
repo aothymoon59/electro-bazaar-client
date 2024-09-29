@@ -158,22 +158,30 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             <label className="label">
               <span className="label-text font-medium">Operating System</span>
             </label>
-            {operatingSystemOptions.map((os) => (
-              <Checkbox
-                onChange={() =>
-                  setQuery({ ...query, operatingSystem: os.value })
-                }
-              >
-                {os?.label}
-              </Checkbox>
-            ))}
+            <Checkbox.Group
+              options={operatingSystemOptions}
+              onChange={(val) => setQuery({ ...query, operatingSystem: val })}
+            />
+            {/* {operatingSystemOptions.map((os) => (
+                <Checkbox
+                // onChange={() =>
+                //   setQuery({ ...query, operatingSystem: os.value })
+                // }
+                >
+                  {os?.label}
+                </Checkbox>
+              ))} */}
           </div>
           {/* connectivity */}
           <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Connectivity</span>
             </label>
-            {connectivityOptions.map((item) => (
+            <Checkbox.Group
+              options={connectivityOptions}
+              onChange={(val) => setQuery({ ...query, connectivity: val })}
+            />
+            {/* {connectivityOptions.map((item) => (
               <Checkbox
                 onChange={() =>
                   setQuery({ ...query, connectivity: item.value })
@@ -181,20 +189,24 @@ const FilterDrawer = ({ setQuery, query }: any) => {
               >
                 {item?.label}
               </Checkbox>
-            ))}
+            ))} */}
           </div>
           {/* Power Source */}
           <div className="form-control mb-4">
             <label className="label">
               <span className="label-text font-medium">Power Source</span>
             </label>
-            {powerSourceOptions.map((item) => (
+            <Checkbox.Group
+              options={powerSourceOptions}
+              onChange={(val) => setQuery({ ...query, powerSource: val })}
+            />
+            {/* {powerSourceOptions.map((item) => (
               <Checkbox
                 onChange={() => setQuery({ ...query, powerSource: item.value })}
               >
                 {item?.label}
               </Checkbox>
-            ))}
+            ))} */}
           </div>
         </div>
       </Drawer>

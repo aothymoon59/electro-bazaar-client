@@ -35,12 +35,14 @@ const ManageGadget = () => {
     brand: "",
     modelNumber: "",
     category: "",
-    operatingSystem: "",
-    connectivity: "",
-    powerSource: "",
+    operatingSystem: [],
+    connectivity: [],
+    powerSource: [],
     cameraResolution: null,
     storage: null,
   });
+
+  console.log(query);
   const { data: allGadgets, isLoading } = useGetAllGadgetsQuery([
     { name: "page", value: page },
     { name: "minPrice", value: query.minPrice },
@@ -49,9 +51,15 @@ const ManageGadget = () => {
     { name: "brand", value: query.brand },
     { name: "modelNumber", value: query.modelNumber },
     { name: "category", value: query.category },
-    { name: "operatingSystem", value: query.operatingSystem },
-    { name: "connectivity", value: query.connectivity },
-    { name: "powerSource", value: query.powerSource },
+    ...(query?.operatingSystem?.length > 0
+      ? [{ name: "operatingSystem", value: query.operatingSystem.join(",") }]
+      : []),
+    ...(query?.connectivity?.length > 0
+      ? [{ name: "connectivity", value: query.connectivity.join(",") }]
+      : []),
+    ...(query?.powerSource?.length > 0
+      ? [{ name: "powerSource", value: query.powerSource.join(",") }]
+      : []),
     { name: "cameraResolution", value: query.cameraResolution },
     { name: "storage", value: query.storage },
   ]);

@@ -5,9 +5,9 @@ export type TQuery = {
   brand?: string;
   modelNumber?: string;
   category?: string;
-  operatingSystem?: string;
-  connectivity?: string;
-  powerSource?: string;
+  operatingSystem?: string[] | null;
+  connectivity?: string[] | null;
+  powerSource?: string[] | null;
   cameraResolution?: number | null;
   storage?: number | null;
 };
