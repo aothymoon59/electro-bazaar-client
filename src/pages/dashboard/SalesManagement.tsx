@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
-import { Empty, Input, Spin } from "antd";
+import { Empty, Input, Pagination, Spin } from "antd";
 import EbButton from "../../components/ui/EbButton";
 import SalesManageModal from "../../components/modals/SalesManageModal";
 
@@ -13,7 +13,8 @@ const SalesManagement = () => {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [gadgetId, setGadgetId] = useState("");
-  const [limit, setLimit] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(0);
+  const [page, setPage] = useState(1);
 
   // Debounce logic
   useEffect(() => {
@@ -26,8 +27,8 @@ const SalesManagement = () => {
     };
   }, [searchText]);
 
-  const { data, isLoading } = useGetAllGadgetsQuery([
-    // { name: "page", value: page },
+  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery([
+    { name: "page", value: page },
     { name: "searchTerm", value: debouncedSearchText },
   ]);
 
@@ -57,14 +58,14 @@ const SalesManagement = () => {
           <Spin spinning={true}></Spin>
         </div>
       )}
-      {data?.data?.length === 0 && (
+      {allGadgets?.data?.length === 0 && (
         <div className="w-full h-[70vh] flex justify-center items-center">
           <Empty />
         </div>
       )}
       <div className="grid md:grid-cols-3 gap-5">
-        {Array.isArray(data?.data) &&
-          data?.data?.map((gadget: any) => {
+        {Array.isArray(allGadgets?.data) &&
+          allGadgets?.data?.map((gadget: any) => {
             const {
               _id,
               name,
@@ -113,7 +114,7 @@ const SalesManagement = () => {
                       onClick={() => {
                         setIsSalesManagementModalOpen(true);
                         setGadgetId(_id);
-                        setLimit(quantity);
+                        setProductQuantity(quantity);
                       }}
                     >
                       Sell Now
@@ -124,11 +125,19 @@ const SalesManagement = () => {
             );
           })}
       </div>
+      <div className="flex justify-center mt-3">
+        <Pagination
+          current={page}
+          onChange={(value) => setPage(value)}
+          pageSize={allGadgets?.meta?.limit}
+          total={allGadgets?.meta?.total}
+        />
+      </div>
       <SalesManageModal
         isModalOpen={isSalesManagementModalOpen}
         setIsModalOpen={setIsSalesManagementModalOpen}
         gadgetId={gadgetId}
-        limit={limit}
+        limit={productQuantity}
       />
     </div>
   );
