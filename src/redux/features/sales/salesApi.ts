@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TQueryParam } from "../../../types/global";
 import { baseApi } from "../../api/baseApi";
 
 const salesApi = baseApi.injectEndpoints({
@@ -11,11 +13,15 @@ const salesApi = baseApi.injectEndpoints({
       invalidatesTags: ["gadgets"],
     }),
     getSaleHistory: builder.query({
-      query: (value: string) => {
+      query: (args: any) => {
         const params = new URLSearchParams();
 
-        if (value) {
-          params.append("filterBy", value);
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            if (item?.value) {
+              params.append(item.name, item.value as string);
+            }
+          });
         }
 
         return {

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useGetSaleHistoryQuery } from "../../redux/features/sales/salesApi";
 import moment from "moment";
-import { Spin, Table, type TableProps } from "antd";
+import { Pagination, Spin, Table, type TableProps } from "antd";
 
 interface SaleData {
   _id: string;
@@ -14,9 +14,9 @@ interface SaleData {
 const columns: TableProps<SaleData>["columns"] = [
   {
     title: "Sl NO.",
-    dataIndex: "key",
-    key: "key",
-    render: (_text, _record, index) => index + 1,
+    dataIndex: "slNo",
+    key: "slNo",
+    render: (text) => text,
   },
   {
     title: "Buyer Name",
@@ -40,11 +40,16 @@ const columns: TableProps<SaleData>["columns"] = [
 ];
 
 const SalesHistory = () => {
-  const [value, setValue] = useState("week");
-  const { data, isLoading } = useGetSaleHistoryQuery(value);
+  const [page, setPage] = useState(1);
+  const [filterVal, setFilterValue] = useState("");
+  const { data: salesHistories, isLoading } = useGetSaleHistoryQuery([
+    { name: "page", value: page },
+    { name: "filterBy", value: filterVal },
+    { name: "sort", value: "slNo" },
+  ]);
 
   const handleHistoryFilter = (filteredVal: string) => {
-    setValue(filteredVal);
+    setFilterValue(filteredVal);
   };
 
   return (
@@ -56,7 +61,7 @@ const SalesHistory = () => {
 
         {/* data filtering */}
         <select
-          defaultValue={"week"}
+          defaultValue={""}
           onChange={(e) => handleHistoryFilter(e.target.value)}
           className="select select-bordered bg-primary-main border border-purple-300 text-white"
         >
@@ -74,11 +79,19 @@ const SalesHistory = () => {
             className="custom-table"
             scroll={{ x: 768 }}
             columns={columns}
-            dataSource={data?.data}
+            dataSource={salesHistories?.data}
             rowKey="_id"
-            pagination={{ pageSize: 10 }}
+            pagination={false}
           />
         </Spin>
+      </div>
+      <div className="flex justify-end mt-3">
+        <Pagination
+          current={page}
+          onChange={(value) => setPage(value)}
+          pageSize={salesHistories?.meta?.limit}
+          total={salesHistories?.meta?.total}
+        />
       </div>
     </div>
   );
