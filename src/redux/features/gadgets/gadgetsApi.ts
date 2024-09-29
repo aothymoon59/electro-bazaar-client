@@ -13,36 +13,6 @@ const gadgetsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["gadgets"],
     }),
-    getGadgets: builder.query({
-      query: (data?: any) => {
-        let searchParams = {};
-        if (Object.keys(data as object)?.length) {
-          searchParams = new URLSearchParams({
-            ...(data?.minPrice && { minPrice: data.minPrice }),
-            ...(data?.maxPrice && { maxPrice: data.maxPrice }),
-            ...(data?.releaseDate && { releaseDate: data.releaseDate }),
-            ...(data?.brand && { brand: data.brand }),
-            ...(data?.modelNumber && { modelNumber: data.modelNumber }),
-            ...(data?.category && { category: data.category }),
-            ...(data?.operatingSystem && {
-              operatingSystem: data?.operatingSystem,
-            }),
-            ...(data?.connectivity && { connectivity: data.connectivity }),
-            ...(data?.powerSource && { powerSource: data.powerSource }),
-            ...(data?.storage && { storage: data.storage }),
-            ...(data?.cameraResolution && {
-              cameraResolution: data.cameraResolution,
-            }),
-          });
-        }
-        return {
-          url: `/products/get-products?${searchParams.toString()}`,
-          method: "GET",
-        };
-      },
-      providesTags: ["gadgets"],
-    }),
-
     getAllGadgets: builder.query({
       query: (args: any) => {
         const params = new URLSearchParams();
@@ -98,7 +68,6 @@ const gadgetsApi = baseApi.injectEndpoints({
 
 export const {
   useAddGadgetMutation,
-  useGetGadgetsQuery,
   useGetSingleGadgetQuery,
   useGetAllGadgetsQuery,
   useUpdateGadgetMutation,

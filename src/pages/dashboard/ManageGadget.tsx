@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Spin, Table, TableProps } from "antd";
+import { Pagination, Spin, Table, TableProps } from "antd";
 import {
   useDeleteGadgetMutation,
   useDeleteMultipleMutation,
-  useGetGadgetsQuery,
+  useGetAllGadgetsQuery,
 } from "../../redux/features/gadgets/gadgetsApi";
 import { useState } from "react";
 import { TQuery } from "../../types/query.types";
@@ -27,8 +27,34 @@ interface GadgetData {
 }
 
 const ManageGadget = () => {
-  const [query, setQuery] = useState<Partial<TQuery>>({});
-  const { data, isLoading } = useGetGadgetsQuery(query);
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState<Partial<TQuery>>({
+    minPrice: null,
+    maxPrice: null,
+    releaseDate: "",
+    brand: "",
+    modelNumber: "",
+    category: "",
+    operatingSystem: "",
+    connectivity: "",
+    powerSource: "",
+    cameraResolution: null,
+    storage: null,
+  });
+  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery([
+    { name: "page", value: page },
+    { name: "minPrice", value: query.minPrice },
+    { name: "maxPrice", value: query.maxPrice },
+    { name: "releaseDate", value: query.releaseDate },
+    { name: "brand", value: query.brand },
+    { name: "modelNumber", value: query.modelNumber },
+    { name: "category", value: query.category },
+    { name: "operatingSystem", value: query.operatingSystem },
+    { name: "connectivity", value: query.connectivity },
+    { name: "powerSource", value: query.powerSource },
+    { name: "cameraResolution", value: query.cameraResolution },
+    { name: "storage", value: query.storage },
+  ]);
   const [deleteGadget] = useDeleteGadgetMutation();
   const [deleteMultiple] = useDeleteMultipleMutation();
   const [ids, setIds] = useState<string[]>([]);
@@ -184,11 +210,19 @@ const ManageGadget = () => {
             scroll={{ x: 768 }}
             columns={columns}
             rowSelection={{ ...rowSelection }}
-            dataSource={data?.data}
+            dataSource={allGadgets?.data}
             rowKey="_id"
-            pagination={{ pageSize: 10 }}
+            pagination={false}
           />
         </Spin>
+      </div>
+      <div className="flex justify-end mt-3">
+        <Pagination
+          current={page}
+          onChange={(value) => setPage(value)}
+          pageSize={allGadgets?.meta?.limit}
+          total={allGadgets?.meta?.total}
+        />
       </div>
     </div>
   );
