@@ -7,6 +7,7 @@ import {
   powerSourceOptions,
   productCategoryOptions,
 } from "../../constants/products";
+import EbButton from "../ui/EbButton";
 
 const FilterDrawer = ({ setQuery, query }: any) => {
   const [open, setOpen] = useState(false);
@@ -29,6 +30,22 @@ const FilterDrawer = ({ setQuery, query }: any) => {
     );
   };
 
+  const handleReset = () => {
+    setQuery({
+      minPrice: null,
+      maxPrice: null,
+      releaseDate: "",
+      brand: "",
+      modelNumber: "",
+      category: "",
+      operatingSystem: [],
+      connectivity: [],
+      powerSource: [],
+      cameraResolution: null,
+      storage: null,
+    });
+  };
+
   return (
     <>
       <Space>
@@ -47,6 +64,9 @@ const FilterDrawer = ({ setQuery, query }: any) => {
         key={"right"}
       >
         <div>
+          <div className="mb-3 text-right">
+            <EbButton onClick={handleReset}>Reset Filter</EbButton>
+          </div>
           {/* price range  */}
           <div className="form-control mb-4">
             <label className="label">
@@ -57,6 +77,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
                 min={0}
                 type="number"
                 placeholder="min price"
+                value={query.minPrice}
                 onChange={(e: any) =>
                   setQuery({ ...query, minPrice: e.target.value })
                 }
@@ -66,6 +87,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
                 min={0}
                 type="number"
                 placeholder="max price"
+                value={query.maxPrice}
                 onChange={(e: any) =>
                   setQuery({ ...query, maxPrice: e.target.value })
                 }
@@ -80,6 +102,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Input
               type="date"
+              value={query.releaseDate}
               onChange={(e: any) =>
                 setQuery({ ...query, releaseDate: e.target.value })
               }
@@ -92,6 +115,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Input
               type="text"
+              value={query.brand}
               onChange={(e: any) =>
                 setQuery({ ...query, brand: e.target.value })
               }
@@ -105,6 +129,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Input
               type="number"
+              value={query.cameraResolution}
               onChange={(e: any) =>
                 setQuery({
                   ...query,
@@ -122,6 +147,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Input
               type="number"
+              value={query.storage}
               onChange={(e: any) =>
                 setQuery({ ...query, storage: e.target.value })
               }
@@ -136,6 +162,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Input
               type="text"
+              value={query.modelNumber}
               onChange={(e: any) =>
                 setQuery({ ...query, modelNumber: e.target.value })
               }
@@ -149,6 +176,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Select
               placeholder="select category"
+              value={query.category || "Select Category"}
               onChange={(value: any) => setQuery({ ...query, category: value })}
               options={productCategoryOptions}
             />
@@ -160,6 +188,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Checkbox.Group
               options={operatingSystemOptions}
+              value={query.operatingSystem}
               onChange={(val) => setQuery({ ...query, operatingSystem: val })}
             />
             {/* {operatingSystemOptions.map((os) => (
@@ -179,6 +208,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Checkbox.Group
               options={connectivityOptions}
+              value={query.connectivity}
               onChange={(val) => setQuery({ ...query, connectivity: val })}
             />
             {/* {connectivityOptions.map((item) => (
@@ -198,6 +228,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
             </label>
             <Checkbox.Group
               options={powerSourceOptions}
+              value={query.powerSource}
               onChange={(val) => setQuery({ ...query, powerSource: val })}
             />
             {/* {powerSourceOptions.map((item) => (

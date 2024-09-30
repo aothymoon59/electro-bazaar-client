@@ -29,6 +29,7 @@ const SalesManagement = () => {
 
   const { data: allGadgets, isLoading } = useGetAllGadgetsQuery([
     { name: "page", value: page },
+    { name: "limit", value: 9 },
     { name: "searchTerm", value: debouncedSearchText },
   ]);
 
@@ -125,7 +126,7 @@ const SalesManagement = () => {
             );
           })}
       </div>
-      <div className="flex justify-center mt-3">
+      <div className="antd_custom_pagination flex justify-center mt-5">
         <Pagination
           current={page}
           onChange={(value) => setPage(value)}

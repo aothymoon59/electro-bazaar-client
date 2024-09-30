@@ -85,7 +85,7 @@ const SalesHistory = () => {
           />
         </Spin>
       </div>
-      <div className="flex justify-end mt-3">
+      <div className="antd_custom_pagination flex justify-end mt-3">
         <Pagination
           current={page}
           onChange={(value) => setPage(value)}

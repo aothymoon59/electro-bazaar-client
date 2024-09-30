@@ -27,6 +27,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               activeBorderColor: "#2A2F4F",
               hoverBorderColor: "#2A2F4F",
             },
+            Pagination: {
+              itemActiveBg: "#2A2F4F",
+            },
           },
         }}
       >
