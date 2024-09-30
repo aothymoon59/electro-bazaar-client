@@ -1,5 +1,7 @@
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
+import DashboardMetrics from "../../components/dashboardHome/ui/DashboardMetrics";
+import RevenueChart from "../../components/dashboardHome/charts/RevenueChart";
 
 const DashboardHome = () => {
   return (
@@ -11,6 +13,9 @@ const DashboardHome = () => {
           { label: "Dashboard", isCurrent: true },
         ]}
       />
+      <div>
+        <DashboardMetrics />
+      </div>
     </div>
   );
 };
