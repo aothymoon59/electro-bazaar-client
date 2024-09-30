@@ -41,9 +41,11 @@ const Register = () => {
       const user = verifyToken(res.data.accessToken);
       dispatch(setUser({ user, token: res.data.accessToken }));
       // reset();
-      setIsSubmitSuccess(true);
-      toast.success(res.message);
-      navigate(from, { replace: true });
+      if (res?.success == true) {
+        setIsSubmitSuccess(true);
+        toast.success(res.message);
+        navigate(from, { replace: true });
+      }
     } catch (error: any) {
       toast.error(error.data.message);
     }

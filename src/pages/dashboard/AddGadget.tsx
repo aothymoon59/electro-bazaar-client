@@ -38,7 +38,10 @@ const AddGadget = () => {
       };
 
       const res = await addGadget(gadget).unwrap();
-      setIsSubmitSuccess(true);
+      if (res?.success == true) {
+        setIsSubmitSuccess(true);
+      }
+
       toast.success(res.message);
     } catch (error: any) {
       toast.error(error.data.message);

@@ -33,8 +33,10 @@ const SalesManageModal = ({
         buyDate: data.buyDate,
       };
       const res = await addSale(saleInfo).unwrap();
-      setIsModalOpen(false);
-      setIsSubmitSuccess(true);
+      if (res?.success === true) {
+        setIsModalOpen(false);
+        setIsSubmitSuccess(true);
+      }
       toast.success(res.message);
     } catch (error: any) {
       toast.error(error.data.message);

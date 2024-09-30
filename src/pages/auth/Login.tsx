@@ -33,9 +33,11 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user, token: res.data.accessToken }));
-      setIsSubmitSuccess(true);
-      toast.success(res.message);
-      navigate(from, { replace: true });
+      if (res?.success == true) {
+        setIsSubmitSuccess(true);
+        toast.success(res.message);
+        navigate(from, { replace: true });
+      }
     } catch (error: any) {
       toast.error(error.data.errorMessage || error.data.message);
     }
