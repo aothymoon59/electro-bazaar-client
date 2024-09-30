@@ -19,6 +19,8 @@ import {
 } from "../../constants/products";
 import EbButton from "../../components/ui/EbButton";
 import CloneGadgetModal from "../../components/modals/CloneGadgetModal";
+import PageHeader from "../../components/ui/PageHeader";
+import { FaHome } from "react-icons/fa";
 
 const UpdateGadget = () => {
   const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
@@ -102,15 +104,19 @@ const UpdateGadget = () => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-          Update Gadget
-        </h5>
-        <EbButton onClick={() => handleCloneGadget(data?.data)}>
-          Create Variant
-        </EbButton>
-      </div>
-      <hr className="border-primary-main my-[23px]" />
+      <PageHeader
+        title="Update Gadget"
+        breadcrumbs={[
+          { label: "ElectroBazaar", link: "/", icon: <FaHome /> },
+          { label: "Manage Gadgets", link: "/gadgets", icon: null },
+          { label: name, isCurrent: true },
+        ]}
+        actions={
+          <EbButton onClick={() => handleCloneGadget(data?.data)}>
+            Create Variant
+          </EbButton>
+        }
+      />
       <EBForm
         onSubmit={onSubmit}
         defaultValues={defaultValues}
