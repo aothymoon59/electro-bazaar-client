@@ -87,7 +87,9 @@ const UpdateGadget = () => {
       };
 
       const res = await updateGadget({ id, payload: gadget }).unwrap();
-      toast.success(res.message);
+      if (res?.success === true) {
+        toast.success(res.message);
+      }
     } catch (error: any) {
       toast.error(error.data.message);
     }
