@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useGetSaleHistoryQuery } from "../../redux/features/sales/salesApi";
 import moment from "moment";
-import { Pagination, Spin, Table, type TableProps } from "antd";
+import { Pagination, Select, Spin, Table, type TableProps } from "antd";
 
 interface SaleData {
   _id: string;
@@ -48,10 +48,6 @@ const SalesHistory = () => {
     { name: "sort", value: "slNo" },
   ]);
 
-  const handleHistoryFilter = (filteredVal: string) => {
-    setFilterValue(filteredVal);
-  };
-
   return (
     <div className="w-full">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -60,17 +56,18 @@ const SalesHistory = () => {
         </h5>
 
         {/* data filtering */}
-        <select
-          defaultValue={""}
-          onChange={(e) => handleHistoryFilter(e.target.value)}
-          className="select select-bordered bg-primary-main border border-purple-300 text-white"
-        >
-          <option value={""}>All</option>
-          <option value={"day"}>Daily</option>
-          <option value={"week"}>Weekly</option>
-          <option value={"month"}>Monthly</option>
-          <option value={"year"}>Yearly</option>
-        </select>
+        <Select
+          defaultValue=""
+          style={{ width: 120 }}
+          onChange={(value) => setFilterValue(value)}
+          options={[
+            { value: "", label: "All" },
+            { value: "day", label: "Day" },
+            { value: "week", label: "Weekly" },
+            { value: "month", label: "Monthly" },
+            { value: "year", label: "Yearly" },
+          ]}
+        />
       </div>
       <hr className="border-primary-main my-[23px]" />
       <div className="overflow-x-auto sales-history">
