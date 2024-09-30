@@ -4,7 +4,7 @@
 
 Electric gadgets Management Dashboard, providing the tools to efficiently manage the Electric gadgets inventory, track sales, and analyze sales history.The project will incorporate features such as authentication, CRUD operations, state management, real-time UI updates, and Electric gadgets filtering.
 
-Live URL: https://electro-mart.netlify.app/
+Live URL: https://electrobazaar.vercel.app/
 
 ## Table of Contents
 
