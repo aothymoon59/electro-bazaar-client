@@ -8,12 +8,13 @@ import {
 import { useState } from "react";
 import { TQuery } from "../../types/query.types";
 import moment from "moment";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaHome, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { TableRowSelection } from "antd/es/table/interface";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import FilterDrawer from "../../components/form/FilterDrawer";
+import { IoIosArrowForward } from "react-icons/io";
 
 interface GadgetData {
   _id: string;
@@ -226,9 +227,22 @@ const ManageGadget = () => {
   return (
     <div className="w-full">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-          Gadgets Management
-        </h5>
+        <div>
+          <h5 className="font-bold text-xl leading-[30px] text-primary-main">
+            Gadget Management
+          </h5>
+          <div className="flex items-center gap-1 sm:gap-2 pt-3">
+            <Link
+              to="/"
+              className="flex items-center gap-2 font-bold text-primary-main"
+            >
+              <FaHome />
+              ElectroBazaar
+            </Link>
+            <IoIosArrowForward className="mx-1 sm:mx-2" />
+            <div className="text-slate-400">Gadget Management</div>
+          </div>
+        </div>
         {/* Gadget filtering */}
         <div className="flex justify-center items-center gap-2 flex-wrap">
           {ids?.length > 0 && (

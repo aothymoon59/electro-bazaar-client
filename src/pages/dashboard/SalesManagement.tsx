@@ -6,6 +6,9 @@ import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Empty, Input, Pagination, Spin } from "antd";
 import EbButton from "../../components/ui/EbButton";
 import SalesManageModal from "../../components/modals/SalesManageModal";
+import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
 
 const SalesManagement = () => {
   const [isSalesManagementModalOpen, setIsSalesManagementModalOpen] =
@@ -40,9 +43,22 @@ const SalesManagement = () => {
   return (
     <div className="w-full">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-          Sales Management
-        </h5>
+        <div>
+          <h5 className="font-bold text-xl leading-[30px] text-primary-main">
+            Sales Management
+          </h5>
+          <div className="flex items-center gap-1 sm:gap-2 pt-3">
+            <Link
+              to="/"
+              className="flex items-center gap-2 font-bold text-primary-main"
+            >
+              <FaHome />
+              ElectroBazaar
+            </Link>
+            <IoIosArrowForward className="mx-1 sm:mx-2" />
+            <div className="text-slate-400">Sales Management</div>
+          </div>
+        </div>
         {/* search  */}
         <div className="relative w-full max-w-[460px]">
           <Input

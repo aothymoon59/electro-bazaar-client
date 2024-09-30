@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useGetSaleHistoryQuery } from "../../redux/features/sales/salesApi";
 import moment from "moment";
 import { Pagination, Select, Spin, Table, type TableProps } from "antd";
+import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
 
 interface SaleData {
   _id: string;
@@ -51,9 +54,22 @@ const SalesHistory = () => {
   return (
     <div className="w-full">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-          Sales History
-        </h5>
+        <div>
+          <h5 className="font-bold text-xl leading-[30px] text-primary-main">
+            Sales History
+          </h5>
+          <div className="flex items-center gap-1 sm:gap-2 pt-3">
+            <Link
+              to="/"
+              className="flex items-center gap-2 font-bold text-primary-main"
+            >
+              <FaHome />
+              ElectroBazaar
+            </Link>
+            <IoIosArrowForward className="mx-1 sm:mx-2" />
+            <div className="text-slate-400">Sales History</div>
+          </div>
+        </div>
 
         {/* data filtering */}
         <Select
