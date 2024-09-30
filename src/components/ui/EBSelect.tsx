@@ -62,6 +62,7 @@ const EBSelect = ({
               size="large"
               disabled={disabled || isUpdating}
               status={error ? "error" : undefined}
+              virtual={false}
             />
           )}
         </Form.Item>

@@ -21,29 +21,21 @@ const EBModal = ({
   modalWidth,
 }: EBModalProps) => {
   return (
-    <div>
-      <Modal
-        title={false}
-        centered={isCentered || false}
-        footer={null}
-        maskClosable={false}
-        open={isModalOpen}
-        closable={true}
-        onCancel={() => {
-          if (isModalOpen) {
-            if (setIsModalOpen) {
-              setIsModalOpen(false);
-            }
-          }
-        }}
-        width={modalWidth || 545}
-      >
-        <Divider orientation="left" dashed className="border-primary-main">
-          {title}
-        </Divider>
-        <div className="">{children}</div>
-      </Modal>
-    </div>
+    <Modal
+      title={false}
+      centered={isCentered || false}
+      footer={null}
+      maskClosable={false}
+      open={isModalOpen}
+      closable={true}
+      onCancel={() => setIsModalOpen(false)}
+      width={modalWidth || 545}
+    >
+      <Divider orientation="left" dashed className="border-primary-main">
+        {title}
+      </Divider>
+      <div className="">{children}</div>
+    </Modal>
   );
 };
 

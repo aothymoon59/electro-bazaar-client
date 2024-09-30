@@ -68,7 +68,7 @@ export const connectivityOptions = connectivity.map((c) => ({
 }));
 
 const powerSources = ["Battery", "Plug-in", "Other"];
-export const powerSourceOptions = powerSources.map((ps) => ({
+export const powerSourceOptions = powerSources?.map((ps) => ({
   label: ps,
   value: ps,
 }));

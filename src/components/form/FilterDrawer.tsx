@@ -179,6 +179,7 @@ const FilterDrawer = ({ setQuery, query }: any) => {
               value={query.category || "Select Category"}
               onChange={(value: any) => setQuery({ ...query, category: value })}
               options={productCategoryOptions}
+              virtual={false}
             />
           </div>
           {/* os */}
