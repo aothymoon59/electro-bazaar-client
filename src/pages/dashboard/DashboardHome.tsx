@@ -15,6 +15,7 @@ const DashboardHome = () => {
       />
       <div>
         <DashboardMetrics />
+        <RevenueChart />
       </div>
     </div>
   );
