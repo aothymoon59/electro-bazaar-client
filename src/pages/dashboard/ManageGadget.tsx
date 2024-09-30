@@ -14,7 +14,7 @@ import { TableRowSelection } from "antd/es/table/interface";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import FilterDrawer from "../../components/form/FilterDrawer";
-import { IoIosArrowForward } from "react-icons/io";
+import PageHeader from "../../components/ui/PageHeader";
 
 interface GadgetData {
   _id: string;
@@ -226,38 +226,26 @@ const ManageGadget = () => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-            Gadget Management
-          </h5>
-          <div className="flex items-center gap-1 sm:gap-2 pt-3">
-            <Link
-              to="/"
-              className="flex items-center gap-2 font-bold text-primary-main"
-            >
-              <FaHome />
-              ElectroBazaar
-            </Link>
-            <IoIosArrowForward className="mx-1 sm:mx-2" />
-            <div className="text-slate-400">Gadget Management</div>
+      <PageHeader
+        title="Manage Gadget"
+        breadcrumbs={[
+          { label: "ElectroBazaar", link: "/", icon: <FaHome /> },
+          { label: "Manage Gadget", isCurrent: true },
+        ]}
+        actions={
+          <div className="flex justify-center items-center gap-2 flex-wrap">
+            {ids?.length > 0 && (
+              <button
+                onClick={handleDeleteMultiple}
+                className="primary-main-btn bg-red-500 hover:bg-opacity-80 transition-all duration-200 ease-in-out"
+              >
+                Delete Selected
+              </button>
+            )}
+            <FilterDrawer setQuery={setQuery} query={query} />
           </div>
-        </div>
-        {/* Gadget filtering */}
-        <div className="flex justify-center items-center gap-2 flex-wrap">
-          {ids?.length > 0 && (
-            <button
-              onClick={handleDeleteMultiple}
-              className="primary-main-btn bg-red-500 hover:bg-opacity-80 transition-all duration-200 ease-in-out"
-            >
-              Delete Selected
-            </button>
-          )}
-
-          <FilterDrawer setQuery={setQuery} query={query} />
-        </div>
-      </div>
-      <hr className="border-primary-main my-[23px]" />
+        }
+      />
       <div className="overflow-x-auto sales-history">
         <Spin spinning={isLoading}>
           <Table

@@ -6,9 +6,8 @@ import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Empty, Input, Pagination, Spin } from "antd";
 import EbButton from "../../components/ui/EbButton";
 import SalesManageModal from "../../components/modals/SalesManageModal";
-import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
+import PageHeader from "../../components/ui/PageHeader";
 
 const SalesManagement = () => {
   const [isSalesManagementModalOpen, setIsSalesManagementModalOpen] =
@@ -42,34 +41,23 @@ const SalesManagement = () => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-            Sales Management
-          </h5>
-          <div className="flex items-center gap-1 sm:gap-2 pt-3">
-            <Link
-              to="/"
-              className="flex items-center gap-2 font-bold text-primary-main"
-            >
-              <FaHome />
-              ElectroBazaar
-            </Link>
-            <IoIosArrowForward className="mx-1 sm:mx-2" />
-            <div className="text-slate-400">Sales Management</div>
+      <PageHeader
+        title="Sales Management"
+        breadcrumbs={[
+          { label: "ElectroBazaar", link: "/", icon: <FaHome /> },
+          { label: "Sales Management", isCurrent: true },
+        ]}
+        actions={
+          <div className="w-full max-w-[460px]">
+            <Input
+              placeholder="Search"
+              prefix={<FiSearch />}
+              size="large"
+              onChange={(e) => handleSearch(e)}
+            />
           </div>
-        </div>
-        {/* search  */}
-        <div className="relative w-full max-w-[460px]">
-          <Input
-            placeholder="Search"
-            prefix={<FiSearch />}
-            size="large"
-            onChange={(e) => handleSearch(e)}
-          />
-        </div>
-      </div>
-      <hr className="border-primary-main my-[23px]" />
+        }
+      />
       {isLoading && (
         <div className="w-full h-[70vh] flex justify-center items-center">
           <Spin spinning={true}></Spin>

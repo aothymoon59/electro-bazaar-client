@@ -3,9 +3,8 @@ import { useState } from "react";
 import { useGetSaleHistoryQuery } from "../../redux/features/sales/salesApi";
 import moment from "moment";
 import { Pagination, Select, Spin, Table, type TableProps } from "antd";
-import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
+import PageHeader from "../../components/ui/PageHeader";
 
 interface SaleData {
   _id: string;
@@ -53,39 +52,27 @@ const SalesHistory = () => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h5 className="font-bold text-xl leading-[30px] text-primary-main">
-            Sales History
-          </h5>
-          <div className="flex items-center gap-1 sm:gap-2 pt-3">
-            <Link
-              to="/"
-              className="flex items-center gap-2 font-bold text-primary-main"
-            >
-              <FaHome />
-              ElectroBazaar
-            </Link>
-            <IoIosArrowForward className="mx-1 sm:mx-2" />
-            <div className="text-slate-400">Sales History</div>
-          </div>
-        </div>
-
-        {/* data filtering */}
-        <Select
-          defaultValue=""
-          style={{ width: 120 }}
-          onChange={(value) => setFilterValue(value)}
-          options={[
-            { value: "", label: "All" },
-            { value: "day", label: "Day" },
-            { value: "week", label: "Weekly" },
-            { value: "month", label: "Monthly" },
-            { value: "year", label: "Yearly" },
-          ]}
-        />
-      </div>
-      <hr className="border-primary-main my-[23px]" />
+      <PageHeader
+        title="Sales History"
+        breadcrumbs={[
+          { label: "ElectroBazaar", link: "/", icon: <FaHome /> },
+          { label: "Sales History", isCurrent: true },
+        ]}
+        actions={
+          <Select
+            defaultValue=""
+            style={{ width: 120 }}
+            onChange={(value) => setFilterValue(value)}
+            options={[
+              { value: "", label: "All" },
+              { value: "day", label: "Day" },
+              { value: "week", label: "Weekly" },
+              { value: "month", label: "Monthly" },
+              { value: "year", label: "Yearly" },
+            ]}
+          />
+        }
+      />
       <div className="overflow-x-auto sales-history">
         <Spin spinning={isLoading}>
           <Table
