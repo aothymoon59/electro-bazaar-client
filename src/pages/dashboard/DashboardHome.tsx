@@ -5,7 +5,7 @@ const DashboardHome = () => {
   return (
     <div className="w-full">
       <PageHeader
-        title="Dashboard"
+        // title="Dashboard"
         breadcrumbs={[
           { label: "ElectroBazaar", link: "/", icon: <FaHome /> },
           { label: "Dashboard", isCurrent: true },
