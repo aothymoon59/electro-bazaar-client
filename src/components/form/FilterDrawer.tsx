@@ -57,16 +57,18 @@ const FilterDrawer = ({ setQuery, query }: any) => {
         </button>
       </Space>
       <Drawer
-        title="Filters"
+        title={
+          <div className="flex justify-between items-center gap-2 flex-wrap">
+            <h4>Filters</h4>
+            <EbButton onClick={handleReset}>Reset Filter</EbButton>
+          </div>
+        }
         placement={"right"}
         onClose={onClose}
         open={open}
         key={"right"}
       >
         <div>
-          <div className="mb-3 text-right">
-            <EbButton onClick={handleReset}>Reset Filter</EbButton>
-          </div>
           {/* price range  */}
           <div className="form-control mb-4">
             <label className="label">
