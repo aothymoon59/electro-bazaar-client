@@ -66,12 +66,12 @@ const ManageGadget = () => {
         name: "connectivity",
         value: query.connectivity.join(","),
       });
-      if (query?.powerSource?.length) {
-        payload.push({
-          name: "powerSource",
-          value: query.powerSource.join(","),
-        });
-      }
+    }
+    if (query?.powerSource?.length) {
+      payload.push({
+        name: "powerSource",
+        value: query.powerSource.join(","),
+      });
     }
     return payload;
   };
