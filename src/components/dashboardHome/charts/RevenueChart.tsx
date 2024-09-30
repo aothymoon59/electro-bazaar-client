@@ -13,10 +13,6 @@ const RevenueChart = () => {
         name: "Loss",
         data: [76, 85, 65, 78, 88, 82, 43, 29, 94],
       },
-      //   {
-      //     name: "Free Cash Flow",
-      //     data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
-      //   },
     ],
     options: {
       chart: {
@@ -70,25 +66,23 @@ const RevenueChart = () => {
   });
 
   return (
-    <div>
-      <div className="h-[450px] mt-6 bg-primary-lighter p-5 flex flex-col gap-5">
-        <div>
-          <h3 className="text-lg font-semibold">Total Revenue</h3>
-          <div className="flex items-center gap-2">
-            <p className="text-3xl font-bold">$ 20.4K</p>{" "}
-            <span className="text-green-700">
-              <FaArrowUp /> 5% than last month
-            </span>
-          </div>
+    <div className="h-[450px] mt-6 bg-primary-lighter p-5 flex flex-col items-start gap-5">
+      <div>
+        <h3 className="text-lg font-semibold">Total Revenue</h3>
+        <div className="flex items-center gap-2">
+          <p className="text-3xl font-bold">$ 20.4K</p>{" "}
+          <span className="text-green-700">
+            <FaArrowUp /> 5% than last month
+          </span>
         </div>
-        <ReactApexChart
-          options={chartData.options}
-          series={chartData.series}
-          type="bar"
-          height={300}
-        />
       </div>
-      {/* <div id="html-dist"></div> */}
+      <ReactApexChart
+        options={chartData.options}
+        series={chartData.series}
+        type="bar"
+        height={300}
+        className="w-full"
+      />
     </div>
   );
 };
