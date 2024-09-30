@@ -160,12 +160,14 @@ const ManageGadget = () => {
     {
       title: "Price",
       dataIndex: "price",
+      width: 130,
       key: "price",
       sorter: (a, b) => a.price - b.price,
     },
     {
       title: "Quantity",
       dataIndex: "quantity",
+      width: 130,
       key: "quantity",
       sorter: (a, b) => a.quantity - b.quantity,
     },
@@ -178,16 +180,31 @@ const ManageGadget = () => {
         moment(a.releaseDate).unix() - moment(b.releaseDate).unix(),
     },
     {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      sorter: (a, b) => a.category.localeCompare(b.category),
+    },
+    {
       title: "Brand",
       dataIndex: "brand",
       key: "brand",
       sorter: (a, b) => a.brand.localeCompare(b.brand),
     },
     {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
-      sorter: (a, b) => a.category.localeCompare(b.category),
+      title: "OS",
+      dataIndex: "operatingSystem",
+      key: "operatingSystem",
+    },
+    {
+      title: "Connectivity",
+      dataIndex: "connectivity",
+      key: "connectivity",
+    },
+    {
+      title: "Power Source",
+      dataIndex: "powerSource",
+      key: "powerSource",
     },
     {
       title: "Actions",
@@ -231,7 +248,7 @@ const ManageGadget = () => {
         <Spin spinning={isLoading}>
           <Table
             className="custom-table"
-            scroll={{ x: 768 }}
+            scroll={{ x: 1024 }}
             columns={columns}
             rowSelection={{ ...rowSelection }}
             dataSource={allGadgets?.data}
