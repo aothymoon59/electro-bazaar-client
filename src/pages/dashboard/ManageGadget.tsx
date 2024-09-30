@@ -42,27 +42,43 @@ const ManageGadget = () => {
     storage: null,
   });
 
-  console.log(query);
-  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery([
-    { name: "page", value: page },
-    { name: "minPrice", value: query.minPrice },
-    { name: "maxPrice", value: query.maxPrice },
-    { name: "releaseDate", value: query.releaseDate },
-    { name: "brand", value: query.brand },
-    { name: "modelNumber", value: query.modelNumber },
-    { name: "category", value: query.category },
-    ...(query?.operatingSystem?.length > 0
-      ? [{ name: "operatingSystem", value: query.operatingSystem.join(",") }]
-      : []),
-    ...(query?.connectivity?.length > 0
-      ? [{ name: "connectivity", value: query.connectivity.join(",") }]
-      : []),
-    ...(query?.powerSource?.length > 0
-      ? [{ name: "powerSource", value: query.powerSource.join(",") }]
-      : []),
-    { name: "cameraResolution", value: query.cameraResolution },
-    { name: "storage", value: query.storage },
-  ]);
+  const handleProductQuery = (query: Partial<TQuery>) => {
+    const payload = [
+      { name: "page", value: page },
+      { name: "minPrice", value: query.minPrice },
+      { name: "maxPrice", value: query.maxPrice },
+      { name: "releaseDate", value: query.releaseDate },
+      { name: "brand", value: query.brand },
+      { name: "modelNumber", value: query.modelNumber },
+      { name: "category", value: query.category },
+      { name: "cameraResolution", value: query.cameraResolution },
+      { name: "storage", value: query.storage },
+    ];
+    if (query?.operatingSystem?.length) {
+      payload.push({
+        name: "operatingSystem",
+        value: query.operatingSystem.join(","),
+      });
+    }
+
+    if (query?.connectivity?.length) {
+      payload.push({
+        name: "connectivity",
+        value: query.connectivity.join(","),
+      });
+      if (query?.powerSource?.length) {
+        payload.push({
+          name: "powerSource",
+          value: query.powerSource.join(","),
+        });
+      }
+    }
+    return payload;
+  };
+
+  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery(
+    handleProductQuery(query)
+  );
   const [deleteGadget] = useDeleteGadgetMutation();
   const [deleteMultiple] = useDeleteMultipleMutation();
   const [ids, setIds] = useState<string[]>([]);
