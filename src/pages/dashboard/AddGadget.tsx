@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FieldValues } from "react-hook-form";
+import { Controller, FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
 import { useAddGadgetMutation } from "../../redux/features/gadgets/gadgetsApi";
@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
+import { Form, Input } from "antd";
 
 const AddGadget = () => {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
@@ -39,7 +40,18 @@ const AddGadget = () => {
         },
       };
 
-      const res = await addGadget(gadget).unwrap();
+      // Prepare the FormData object
+      const formData = new FormData();
+
+      // Append the file if exists
+      if (data.productImage) {
+        formData.append("productImage", data.productImage);
+      }
+
+      // Append the JSON data as a string
+      formData.append("gadgetData", JSON.stringify(gadget));
+
+      const res = await addGadget(formData).unwrap();
       if (res?.success == true) {
         setIsSubmitSuccess(true);
       }
@@ -68,6 +80,20 @@ const AddGadget = () => {
             label="Name"
             required
             placeholder="Enter product name"
+          />
+          {/* image  */}
+          <Controller
+            name="productImage"
+            render={({ field: { onChange, value, ...field } }) => (
+              <Form.Item label="Product Image">
+                <Input
+                  type="file"
+                  value={value?.fileName}
+                  {...field}
+                  onChange={(e) => onChange(e.target.files?.[0])}
+                />
+              </Form.Item>
+            )}
           />
           {/* Price  */}
           <EBInput
