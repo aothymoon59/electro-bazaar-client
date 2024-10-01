@@ -23,7 +23,7 @@ const AddGadget = () => {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [addGadget, { isLoading }] = useAddGadgetMutation();
   const [imgUrl, setImgUrl] = useState<string | null>(null);
-  const [isUpload, setIsUpload] = useState<boolean>(false);
+  // const [isUpload, setIsUpload] = useState<boolean>(false);
 
   const onSubmit = async (data: FieldValues) => {
     if (!imgUrl) {
