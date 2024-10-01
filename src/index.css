@@ -88,3 +88,7 @@ body {
 .antd_custom_pagination button.ant-pagination-item-link {
     background: #DFDFDF !important;
 }
+
+/* .ebChart .apexcharts-canvas {
+    width: 700px !important;
+} */

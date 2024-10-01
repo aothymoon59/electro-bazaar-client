@@ -1,6 +1,7 @@
 import { useState } from "react";
-import ReactApexChart from "react-apexcharts"; // Import ReactApexChart if not already imported
+// import ReactApexChart from "react-apexcharts";
 import { FaArrowUp } from "react-icons/fa6";
+import Chart from "react-apexcharts";
 
 const RevenueChart = () => {
   const [chartData] = useState({
@@ -15,14 +16,10 @@ const RevenueChart = () => {
       },
     ],
     options: {
-      chart: {
-        type: "bar",
-        height: 300,
-      },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: "55%",
+          columnWidth: "70%",
           endingShape: "rounded",
         },
       },
@@ -66,7 +63,7 @@ const RevenueChart = () => {
   });
 
   return (
-    <div className="h-[450px] mt-6 bg-primary-lighter p-5 flex flex-col items-start gap-5">
+    <div className="ebChart h-[450px] mt-6 bg-primary-lighter p-5 flex flex-col items-start gap-5">
       <div>
         <h3 className="text-lg font-semibold">Total Revenue</h3>
         <div className="flex items-center gap-2">
@@ -76,13 +73,14 @@ const RevenueChart = () => {
           </span>
         </div>
       </div>
-      <ReactApexChart
-        options={chartData.options}
-        series={chartData.series}
-        type="bar"
-        height={300}
-        className="w-full"
-      />
+      <div className="w-full">
+        <Chart
+          options={chartData.options}
+          series={chartData.series}
+          type="bar"
+          height={300}
+        />
+      </div>
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
 import DashboardMetrics from "../../components/dashboardHome/ui/DashboardMetrics";
-import RevenueChart from "../../components/dashboardHome/charts/RevenueChart";
 import SoldPieChart from "../../components/dashboardHome/charts/SoldPieChart";
 import LatestSales from "../../components/dashboardHome/sections/LatestSales";
+import { RevenueBarChart } from "../../components/dashboardHome/charts/RevenueBarChart";
 
 const DashboardHome = () => {
   return (
@@ -18,7 +18,7 @@ const DashboardHome = () => {
       <div>
         <DashboardMetrics />
         <div className="grid lg:grid-cols-[2fr_1fr] gap-5">
-          <RevenueChart />
+          <RevenueBarChart />
           <SoldPieChart />
         </div>
         <LatestSales />

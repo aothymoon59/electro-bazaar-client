@@ -25,17 +25,19 @@ const SoldPieChart = () => {
   });
 
   return (
-    <div className="h-[450px] mt-6 bg-primary-lighter p-5 flex flex-col items-start gap-5">
+    <div className="h-[450px] xl:h-[550px] mt-6 bg-primary-lighter p-5 flex flex-col items-start gap-5">
       <div>
         <h3 className="text-lg font-semibold">Most Sold Items </h3>
       </div>
-      <ReactApexChart
-        options={chartData.options}
-        series={chartData.series}
-        type="donut"
-        className="w-full"
-        height={300}
-      />
+      <div className="w-full h-full flex justify-center items-center">
+        <ReactApexChart
+          options={chartData.options}
+          series={chartData.series}
+          type="donut"
+          className="w-full"
+          height={300}
+        />
+      </div>
     </div>
   );
 };
