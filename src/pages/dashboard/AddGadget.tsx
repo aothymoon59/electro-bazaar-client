@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Controller, FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -16,12 +17,20 @@ import { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
 import { Form, Input } from "antd";
+import { uploadImage } from "../../utils/global";
 
 const AddGadget = () => {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [addGadget, { isLoading }] = useAddGadgetMutation();
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const [isUpload, setIsUpload] = useState<boolean>(false);
 
   const onSubmit = async (data: FieldValues) => {
+    if (!imgUrl) {
+      toast.error("Please upload an image before submitting the form.");
+      return;
+    }
+
     try {
       const gadget = {
         name: data.name,
@@ -38,27 +47,25 @@ const AddGadget = () => {
           cameraResolution: parseFloat(data.cameraResolution) || undefined,
           storageCapacity: parseFloat(data.storageCapacity) || undefined,
         },
+        productImage: imgUrl,
       };
 
-      // Prepare the FormData object
-      const formData = new FormData();
-
-      // Append the file if exists
-      if (data.productImage) {
-        formData.append("productImage", data.productImage);
-      }
-
-      // Append the JSON data as a string
-      formData.append("gadgetData", JSON.stringify(gadget));
-
-      const res = await addGadget(formData).unwrap();
+      const res = await addGadget(gadget).unwrap();
       if (res?.success == true) {
         setIsSubmitSuccess(true);
       }
 
       toast.success(res.message);
     } catch (error: any) {
-      toast.error(error.data.message);
+      toast.error(error?.data?.message);
+    }
+  };
+
+  // Handler for file input change
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setIsUpload(true); // Start uploading
+      uploadImage(e.target.files[0], setImgUrl, setIsUpload);
     }
   };
 
@@ -85,12 +92,13 @@ const AddGadget = () => {
           <Controller
             name="productImage"
             render={({ field: { onChange, value, ...field } }) => (
-              <Form.Item label="Product Image">
+              <Form.Item label={`Product Image*`}>
                 <Input
                   type="file"
                   value={value?.fileName}
                   {...field}
-                  onChange={(e) => onChange(e.target.files?.[0])}
+                  onChange={handleImageUpload}
+                  // required
                 />
               </Form.Item>
             )}
