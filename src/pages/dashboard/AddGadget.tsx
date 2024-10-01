@@ -64,8 +64,8 @@ const AddGadget = () => {
   // Handler for file input change
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setIsUpload(true); // Start uploading
-      uploadImage(e.target.files[0], setImgUrl, setIsUpload);
+      // setIsUpload(true); // Start uploading
+      uploadImage(e.target.files[0], setImgUrl);
     }
   };
 

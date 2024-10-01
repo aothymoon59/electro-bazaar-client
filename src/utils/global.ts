@@ -4,8 +4,8 @@ import { storage } from "../firebase/firebase.config.js";
 
 export const uploadImage = (
   file: any,
-  setImgUrl: React.Dispatch<React.SetStateAction<string | null>>,
-  setIsUpload: React.Dispatch<React.SetStateAction<boolean>>
+  setImgUrl: React.Dispatch<React.SetStateAction<string | null>>
+  //   setIsUpload: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   //   const file = e.target.files?.[0]; // TypeScript safe access for the file
   if (!file) return;
@@ -20,7 +20,7 @@ export const uploadImage = (
     () => {
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         setImgUrl(downloadURL); // Set the download URL
-        setIsUpload(false); // Indicate the upload is complete
+        // setIsUpload(false); // Indicate the upload is complete
       });
     }
   );
