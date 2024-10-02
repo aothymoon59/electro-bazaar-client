@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Controller, FieldValues } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
 import { useAddGadgetMutation } from "../../redux/features/gadgets/gadgetsApi";
@@ -14,15 +14,16 @@ import {
   productCategoryOptions,
 } from "../../constants/products";
 import { useState } from "react";
-import { FaCloudDownloadAlt, FaHome } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
-import { Form, Input } from "antd";
+// import { Form, Input } from "antd";
 import { uploadImage } from "../../utils/global";
+import EBFileInput from "../../components/ui/EBFileInput";
 
 const AddGadget = () => {
   const [addGadget, { isLoading }] = useAddGadgetMutation();
   const [imgUrl, setImgUrl] = useState<string | null>(null);
-  // const [isUpload, setIsUpload] = useState<boolean>(false);
+  const [fileInputData, setFileInputData] = useState<File | null>(null);
 
   const onSubmit = async (data: FieldValues) => {
     if (!imgUrl) {
@@ -52,6 +53,7 @@ const AddGadget = () => {
       const res = await addGadget(gadget).unwrap();
       if (res?.success == true) {
         setImgUrl(null); // Clear the image URL
+        setFileInputData(null); // Clear the file input data
       }
       toast.success(res.message);
       return res; // Return the response to EBForm
@@ -60,11 +62,12 @@ const AddGadget = () => {
     }
   };
 
-  // Handler for file input change
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      // setIsUpload(true); // Start uploading
-      uploadImage(e.target.files[0], setImgUrl);
+  const handleImageUpload = (file: File | null) => {
+    if (file) {
+      uploadImage(file, setImgUrl);
+      setFileInputData(file);
+    } else {
+      setFileInputData(null); // Reset when no file is selected
     }
   };
 
@@ -79,6 +82,12 @@ const AddGadget = () => {
       />
       <EBForm onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          {/* image  */}
+          <EBFileInput
+            label="Product Image*"
+            fileInputData={fileInputData}
+            onChange={handleImageUpload}
+          />
           {/* name  */}
           <EBInput
             type="text"
@@ -86,23 +95,6 @@ const AddGadget = () => {
             label="Name"
             required
             placeholder="Enter product name"
-          />
-          {/* image  */}
-          <Controller
-            name="productImage"
-            render={({ field: { onChange, value, ...field } }) => {
-              return (
-                <Form.Item label={`Product Image*`}>
-                  <Input
-                    size="large"
-                    type="file"
-                    {...field}
-                    onChange={handleImageUpload}
-                    suffix={<FaCloudDownloadAlt />}
-                  />
-                </Form.Item>
-              );
-            }}
           />
           {/* Price  */}
           <EBInput
