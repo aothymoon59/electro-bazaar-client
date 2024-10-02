@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 import { TQuery } from "../../types/query.types";
 import moment from "moment";
-import { FaEdit, FaHome, FaTrash } from "react-icons/fa";
+import { FaEdit, FaEye, FaHome, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { TableRowSelection } from "antd/es/table/interface";
 import Swal from "sweetalert2";
@@ -153,6 +153,19 @@ const ManageGadget = () => {
       render: (_text, _record, index) => index + 1,
     },
     {
+      title: "Gadget Image",
+      dataIndex: "productImage",
+      key: "productImage",
+      render: (text) => (
+        <img
+          src={text}
+          alt="gadget"
+          className="w-20 h-20 object-cover object-center"
+        />
+      ),
+      align: "center",
+    },
+    {
       title: "Gadgets Name",
       dataIndex: "name",
       key: "name",
@@ -195,14 +208,17 @@ const ManageGadget = () => {
     {
       title: "Actions",
       fixed: "right",
-      width: 100,
+      width: 150,
       render: (_text, record) => (
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex justify-start items-center gap-3">
+          <Link to={`/gadgets/view/${record._id}`}>
+            <FaEye size={18} />
+          </Link>
           <Link to={`/gadgets/update/${record._id}`}>
-            <FaEdit />
+            <FaEdit size={16} />
           </Link>
           <a onClick={() => handleSingleDelete(record._id)}>
-            <FaTrash className="text-red-500" />
+            <FaTrash size={14} className="text-red-500" />
           </a>
         </div>
       ),

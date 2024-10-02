@@ -9,6 +9,7 @@ import { MdOutlineViewList } from "react-icons/md";
 import { BiSitemap } from "react-icons/bi";
 import { FaHistory } from "react-icons/fa";
 import UpdateGadget from "../pages/dashboard/UpdateGadget";
+import ProductDetails from "../pages/dashboard/ProductDetails";
 
 export const dashboardPaths = [
   {
@@ -28,6 +29,12 @@ export const dashboardPaths = [
     path: "gadgets",
     element: <ManageGadget />,
     icon: <MdOutlineViewList />,
+  },
+  {
+    name: "",
+    path: "gadgets/view/:id",
+    element: <ProductDetails />,
+    icon: "",
   },
   {
     name: "",
