@@ -14,20 +14,19 @@ import {
   productCategoryOptions,
 } from "../../constants/products";
 import { useState } from "react";
-import { FaHome } from "react-icons/fa";
+import { FaCloudDownloadAlt, FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
 import { Form, Input } from "antd";
 import { uploadImage } from "../../utils/global";
 
 const AddGadget = () => {
-  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [addGadget, { isLoading }] = useAddGadgetMutation();
   const [imgUrl, setImgUrl] = useState<string | null>(null);
   // const [isUpload, setIsUpload] = useState<boolean>(false);
 
   const onSubmit = async (data: FieldValues) => {
     if (!imgUrl) {
-      toast.error("Please upload an image before submitting the form.");
+      toast.error("Please upload product image.");
       return;
     }
 
@@ -52,10 +51,10 @@ const AddGadget = () => {
 
       const res = await addGadget(gadget).unwrap();
       if (res?.success == true) {
-        setIsSubmitSuccess(true);
+        setImgUrl(null); // Clear the image URL
       }
-
       toast.success(res.message);
+      return res; // Return the response to EBForm
     } catch (error: any) {
       toast.error(error?.data?.message);
     }
@@ -78,7 +77,7 @@ const AddGadget = () => {
           { label: "Add Gadget", isCurrent: true },
         ]}
       />
-      <EBForm onSubmit={onSubmit} isSubmitSuccess={isSubmitSuccess}>
+      <EBForm onSubmit={onSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {/* name  */}
           <EBInput
@@ -91,17 +90,19 @@ const AddGadget = () => {
           {/* image  */}
           <Controller
             name="productImage"
-            render={({ field: { onChange, value, ...field } }) => (
-              <Form.Item label={`Product Image*`}>
-                <Input
-                  type="file"
-                  value={value?.fileName}
-                  {...field}
-                  onChange={handleImageUpload}
-                  // required
-                />
-              </Form.Item>
-            )}
+            render={({ field: { onChange, value, ...field } }) => {
+              return (
+                <Form.Item label={`Product Image*`}>
+                  <Input
+                    size="large"
+                    type="file"
+                    {...field}
+                    onChange={handleImageUpload}
+                    suffix={<FaCloudDownloadAlt />}
+                  />
+                </Form.Item>
+              );
+            }}
           />
           {/* Price  */}
           <EBInput

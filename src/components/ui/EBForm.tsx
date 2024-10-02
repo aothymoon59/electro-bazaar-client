@@ -16,7 +16,6 @@ type TFormConfig = {
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
-  isSubmitSuccess?: boolean;
   isGadgetLoading?: boolean;
 } & TFormConfig;
 
@@ -25,7 +24,6 @@ const EBForm = ({
   children,
   defaultValues,
   resolver,
-  isSubmitSuccess,
   isGadgetLoading,
 }: TFormProps) => {
   const formConfig: TFormConfig = {};
@@ -45,10 +43,15 @@ const EBForm = ({
     }
   }, [defaultValues, isGadgetLoading, methods]);
 
-  const submit: SubmitHandler<FieldValues> = (data) => {
-    onSubmit(data);
-    if (isSubmitSuccess) {
-      methods.reset();
+  const submit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      const res: any = await onSubmit(data); // Wait for the onSubmit function to complete successfully
+      if (res?.success === true) {
+        methods.reset(); // Reset the form once the data is submitted successfully
+      }
+    } catch (error) {
+      // Handle any errors during submission, e.g., show error messages
+      console.error("Submission failed", error);
     }
   };
 

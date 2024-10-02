@@ -14,7 +14,6 @@ import EBInput from "../../components/ui/EBInput";
 import { MdEmail } from "react-icons/md";
 
 const Register = () => {
-  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,10 +41,11 @@ const Register = () => {
       dispatch(setUser({ user, token: res.data.accessToken }));
       // reset();
       if (res?.success == true) {
-        setIsSubmitSuccess(true);
         toast.success(res.message);
         navigate(from, { replace: true });
       }
+
+      return res;
     } catch (error: any) {
       toast.error(error.data.message);
     }
@@ -61,7 +61,7 @@ const Register = () => {
           </h2>
           <p className="text-sm">Please enter your details for register</p>
         </div>
-        <EBForm onSubmit={onSubmit} isSubmitSuccess={isSubmitSuccess}>
+        <EBForm onSubmit={onSubmit}>
           <EBInput
             type="text"
             name="name"

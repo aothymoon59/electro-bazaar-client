@@ -6,7 +6,6 @@ import EBInput from "../ui/EBInput";
 import EBModal from "../ui/EBModal";
 import { FieldValues } from "react-hook-form";
 import { useAddSaleMutation } from "../../redux/features/sales/salesApi";
-import { useState } from "react";
 
 type SalesManageModalProps = {
   isModalOpen: boolean;
@@ -21,7 +20,6 @@ const SalesManageModal = ({
   gadgetId,
   limit,
 }: SalesManageModalProps) => {
-  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const [addSale, { isLoading: addSaleIsLoading }] = useAddSaleMutation();
 
   const onSubmit = async (data: FieldValues) => {
@@ -35,9 +33,9 @@ const SalesManageModal = ({
       const res = await addSale(saleInfo).unwrap();
       if (res?.success === true) {
         setIsModalOpen(false);
-        setIsSubmitSuccess(true);
       }
       toast.success(res.message);
+      return res;
     } catch (error: any) {
       toast.error(error.data.message);
     }
@@ -51,7 +49,7 @@ const SalesManageModal = ({
       setIsModalOpen={setIsModalOpen}
       modalWidth={545}
     >
-      <EBForm onSubmit={onSubmit} isSubmitSuccess={isSubmitSuccess}>
+      <EBForm onSubmit={onSubmit}>
         <EBInput
           type="number"
           name="quantity"
