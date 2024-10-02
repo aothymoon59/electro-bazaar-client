@@ -73,6 +73,7 @@ const SalesManagement = () => {
           allGadgets?.data?.map((gadget: any) => {
             const {
               _id,
+              productImage,
               name,
               price,
               releaseDate,
@@ -86,44 +87,52 @@ const SalesManagement = () => {
                 key={_id}
                 className="card card-compact bg-primary-lighter shadow-md"
               >
-                <div className="card-body">
-                  <h2 className="card-title">{name}</h2>
-                  <p className="flex gap-2 mt-2">
-                    <span className="font-bold">Price:</span>
-                    {price}
-                  </p>
-                  <p className="flex gap-2 mt-2">
-                    <span className="font-bold">Quantity:</span>
-                    {quantity}
-                  </p>
-                  <p className="flex gap-2">
-                    <span className="font-bold">Release Date:</span>
+                <div className="p-3">
+                  <div className="bg-white w-full h-[200px] p-3 flex justify-center rounded-md">
+                    <img
+                      src={productImage}
+                      alt={name}
+                      className="rounded-xl h-[170px]"
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="card-title">{name}</h2>
+                    <p className="flex gap-2">
+                      <span className="font-bold">Price:</span>${price}
+                    </p>
+                    <p className="flex gap-2">
+                      <span className="font-bold">Quantity:</span>
+                      {quantity}
+                    </p>
+                    <p className="flex gap-2">
+                      <span className="font-bold">Release Date:</span>
 
-                    <span>{moment(releaseDate).format("DD/MM/YYYY")}</span>
-                  </p>
-                  <p className="flex gap-2">
-                    <span className="font-bold">Brand:</span>
-                    {brand}
-                  </p>
-                  <p className="flex gap-2">
-                    <span className="font-bold">Model:</span>
-                    {modelNumber}
-                  </p>
-                  <p className="flex gap-2">
-                    <span className="font-bold">Category:</span>
-                    {category}
-                  </p>
-                  <div className="card-actions justify-end mt-3">
-                    <EbButton
-                      className="primary-main-btn w-full"
-                      onClick={() => {
-                        setIsSalesManagementModalOpen(true);
-                        setGadgetId(_id);
-                        setProductQuantity(quantity);
-                      }}
-                    >
-                      Sell Now
-                    </EbButton>
+                      <span>{moment(releaseDate).format("DD/MM/YYYY")}</span>
+                    </p>
+                    <p className="flex gap-2">
+                      <span className="font-bold">Brand:</span>
+                      {brand}
+                    </p>
+                    <p className="flex gap-2">
+                      <span className="font-bold">Model:</span>
+                      {modelNumber}
+                    </p>
+                    <p className="flex gap-2">
+                      <span className="font-bold">Category:</span>
+                      {category}
+                    </p>
+                    <div className="card-actions justify-end mt-3">
+                      <EbButton
+                        className="primary-main-btn w-full"
+                        onClick={() => {
+                          setIsSalesManagementModalOpen(true);
+                          setGadgetId(_id);
+                          setProductQuantity(quantity);
+                        }}
+                      >
+                        Sell Now
+                      </EbButton>
+                    </div>
                   </div>
                 </div>
               </div>
