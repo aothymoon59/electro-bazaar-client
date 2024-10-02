@@ -193,21 +193,6 @@ const ManageGadget = () => {
       sorter: (a, b) => a.brand.localeCompare(b.brand),
     },
     {
-      title: "OS",
-      dataIndex: "operatingSystem",
-      key: "operatingSystem",
-    },
-    {
-      title: "Connectivity",
-      dataIndex: "connectivity",
-      key: "connectivity",
-    },
-    {
-      title: "Power Source",
-      dataIndex: "powerSource",
-      key: "powerSource",
-    },
-    {
       title: "Actions",
       fixed: "right",
       width: 100,
