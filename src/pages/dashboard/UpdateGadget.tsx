@@ -21,6 +21,8 @@ import EbButton from "../../components/ui/EbButton";
 import CloneGadgetModal from "../../components/modals/CloneGadgetModal";
 import PageHeader from "../../components/ui/PageHeader";
 import { FaHome } from "react-icons/fa";
+import EBFileInput from "../../components/ui/EBFileInput";
+import { uploadImage } from "../../utils/global";
 
 const UpdateGadget = () => {
   const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
@@ -31,8 +33,12 @@ const UpdateGadget = () => {
   });
   const [updateGadget, { isLoading: isGadgetUpdating }] =
     useUpdateGadgetMutation();
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const [fileInputData, setFileInputData] = useState<File | null>(null);
+
   const {
     name,
+    productImage,
     price,
     quantity,
     releaseDate,
@@ -67,6 +73,7 @@ const UpdateGadget = () => {
     powerSource: powerSource,
     cameraResolution: cameraResolution,
     storageCapacity: storageCapacity,
+    productImage: productImage,
   };
 
   const onSubmit = async (formVal: FieldValues) => {
@@ -83,23 +90,35 @@ const UpdateGadget = () => {
         connectivity: formVal.connectivity,
         powerSource: formVal.powerSource,
         features: {
-          cameraResolution: parseFloat(formVal.cameraResolution),
-          storageCapacity: parseFloat(formVal.storageCapacity),
+          cameraResolution: parseFloat(data.cameraResolution) || undefined,
+          storageCapacity: parseFloat(data.storageCapacity) || undefined,
         },
+        productImage: imgUrl || data.productImage,
       };
 
       const res = await updateGadget({ id, payload: gadget }).unwrap();
       if (res?.success === true) {
+        setImgUrl(null); // Clear the image URL
+        setFileInputData(null); // Clear the file input data
         toast.success(res.message);
       }
     } catch (error: any) {
-      toast.error(error.data.message);
+      toast.error(error?.data?.errorMessage || error?.data?.message);
     }
   };
 
   const handleCloneGadget = (gadget: any) => {
     setIsDuplicateModalOpen(true);
     setDuplicateModalData(gadget);
+  };
+
+  const handleImageUpload = (file: File | null) => {
+    if (file) {
+      uploadImage(file, setImgUrl);
+      setFileInputData(file);
+    } else {
+      setFileInputData(null); // Reset when no file is selected
+    }
   };
 
   return (
@@ -123,6 +142,12 @@ const UpdateGadget = () => {
         isGadgetLoading={isGadgetLoading}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          {/* image  */}
+          <EBFileInput
+            label="Product Image*"
+            fileInputData={fileInputData}
+            onChange={handleImageUpload}
+          />
           {/* name  */}
           <EBInput
             type="text"
