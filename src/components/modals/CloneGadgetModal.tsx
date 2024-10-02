@@ -15,6 +15,8 @@ import {
   powerSourceOptions,
   productCategoryOptions,
 } from "../../constants/products";
+import EBFileInput from "../ui/EBFileInput";
+import { uploadImage } from "../../utils/global";
 
 const CloneGadgetModal = ({
   isModalOpen,
@@ -22,6 +24,8 @@ const CloneGadgetModal = ({
   modalData,
 }: EBModalProps) => {
   const [addGadget, { isLoading: addGadgetIsLoading }] = useAddGadgetMutation();
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const [fileInputData, setFileInputData] = useState<File | null>(null);
 
   const {
     name,
@@ -35,6 +39,7 @@ const CloneGadgetModal = ({
     connectivity,
     powerSource,
     features,
+    productImage,
   } = modalData || {};
   const { cameraResolution, storageCapacity } = features || {};
 
@@ -59,6 +64,7 @@ const CloneGadgetModal = ({
     powerSource: powerSource,
     cameraResolution: cameraResolution,
     storageCapacity: storageCapacity,
+    productImage: productImage,
   };
 
   const onSubmit = async (formVal: FieldValues) => {
@@ -78,13 +84,27 @@ const CloneGadgetModal = ({
           cameraResolution: parseFloat(formVal.cameraResolution) || undefined,
           storageCapacity: parseFloat(formVal.storageCapacity) || undefined,
         },
+        productImage: imgUrl || modalData.productImage,
       };
 
-      await addGadget(gadget).unwrap();
-      setIsModalOpen(false);
-      toast.success("Create variant successfully");
+      const res = await addGadget(gadget).unwrap();
+      if (res?.success == true) {
+        setIsModalOpen(false);
+        setImgUrl(null); // Clear the image URL
+        setFileInputData(null); // Clear the file input data
+        toast.success("Create variant successfully");
+      }
     } catch (error: any) {
       toast.error(error.data.message);
+    }
+  };
+
+  const handleImageUpload = (file: File | null) => {
+    if (file) {
+      uploadImage(file, setImgUrl);
+      setFileInputData(file);
+    } else {
+      setFileInputData(null); // Reset when no file is selected
     }
   };
 
@@ -97,6 +117,12 @@ const CloneGadgetModal = ({
     >
       <EBForm onSubmit={onSubmit} defaultValues={defaultValues}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          {/* image  */}
+          <EBFileInput
+            label="Product Image*"
+            fileInputData={fileInputData}
+            onChange={handleImageUpload}
+          />
           {/* name  */}
           <EBInput
             type="text"
