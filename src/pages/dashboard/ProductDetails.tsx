@@ -5,7 +5,7 @@ import { useGetSingleGadgetQuery } from "../../redux/features/gadgets/gadgetsApi
 import moment from "moment";
 import { Spin } from "antd";
 
-// TODO: design will be updateDoc, its just demo for check data
+// TODO: design will be updated, its just demo for check data
 const ProductDetails = () => {
   const { id: productId } = useParams();
   const { data: productFromAPi, isLoading: isGadgetLoading } =
