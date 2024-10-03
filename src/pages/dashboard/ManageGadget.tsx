@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Pagination, Spin, Table, TableProps } from "antd";
+import { Pagination, Table, TableProps } from "antd";
 import {
   useDeleteGadgetMutation,
   useDeleteMultipleMutation,
@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import FilterDrawer from "../../components/form/FilterDrawer";
 import PageHeader from "../../components/ui/PageHeader";
+import AntdTableSkeleton from "../../components/global/loaders/tableskeleton/AntdTableSkeleton";
 
 interface GadgetData {
   _id: string;
@@ -78,9 +79,12 @@ const ManageGadget = () => {
     return payload;
   };
 
-  const { data: allGadgets, isLoading } = useGetManageGadgetsQuery(
-    handleProductQuery(query)
-  );
+  const { data: allGadgets, isLoading: isAllGadgetsLoading } =
+    useGetManageGadgetsQuery(handleProductQuery(query), {
+      refetchOnMountOrArgChange: true, // Refetch data on every visit or argument change
+      refetchOnFocus: true, // Optional: Refetch when the user focuses on the page
+      refetchOnReconnect: true, // Optional: Refetch when user reconnects
+    });
   const [deleteGadget] = useDeleteGadgetMutation();
   const [deleteMultiple] = useDeleteMultipleMutation();
   const [ids, setIds] = useState<string[]>([]);
@@ -255,7 +259,9 @@ const ManageGadget = () => {
         }
       />
       <div className="overflow-x-auto sales-history">
-        <Spin spinning={isLoading}>
+        {isAllGadgetsLoading ? (
+          <AntdTableSkeleton />
+        ) : (
           <Table
             className="custom-table"
             scroll={{ x: 1024 }}
@@ -265,7 +271,7 @@ const ManageGadget = () => {
             rowKey="_id"
             pagination={false}
           />
-        </Spin>
+        )}
       </div>
       <div className="antd_custom_pagination flex justify-end mt-3">
         <Pagination

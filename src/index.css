@@ -89,6 +89,28 @@ body {
     background: #DFDFDF !important;
 }
 
-/* .ebChart .apexcharts-canvas {
-    width: 700px !important;
-} */
+/* ************eb table skeleton design**************  */
+.eb_skeleton_table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.eb_skeleton_row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    justify-content: space-between;
+    padding: 20px 0;
+    transition: background-color 0.3s;
+}
+
+.eb_skeleton_row.eb_odd {
+    background-color: #F5F5F5;
+}
+
+.eb_skeleton_row:hover {
+    background-color: #F5F5F5;
+    padding: 18px 0;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+}

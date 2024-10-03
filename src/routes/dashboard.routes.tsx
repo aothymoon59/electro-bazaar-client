@@ -2,7 +2,7 @@ import AddGadget from "../pages/dashboard/AddGadget";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import ManageGadget from "../pages/dashboard/ManageGadget";
 import SalesHistory from "../pages/dashboard/SalesHistory";
-import SalesManagement from "../pages/dashboard/SalesManagement";
+// import SalesManagement from "../pages/dashboard/SalesManagement";
 import { MdDashboard } from "react-icons/md";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { MdOutlineViewList } from "react-icons/md";
@@ -10,6 +10,7 @@ import { BiSitemap } from "react-icons/bi";
 import { FaHistory } from "react-icons/fa";
 import UpdateGadget from "../pages/dashboard/UpdateGadget";
 import ProductDetails from "../pages/dashboard/ProductDetails";
+import ShopManagement from "../pages/dashboard/ShopManagement";
 
 export const dashboardPaths = [
   {
@@ -43,9 +44,9 @@ export const dashboardPaths = [
     icon: "",
   },
   {
-    name: "Sales Management",
-    path: "sales-management",
-    element: <SalesManagement />,
+    name: "Shop",
+    path: "shop",
+    element: <ShopManagement />,
     icon: <BiSitemap />,
   },
   {

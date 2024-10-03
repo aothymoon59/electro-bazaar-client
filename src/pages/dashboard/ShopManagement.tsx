@@ -5,17 +5,12 @@ import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Empty, Input, Pagination, Spin } from "antd";
 import EbButton from "../../components/ui/EbButton";
-import SalesManageModal from "../../components/modals/SalesManageModal";
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
 
-const SalesManagement = () => {
-  const [isSalesManagementModalOpen, setIsSalesManagementModalOpen] =
-    useState(false);
+const ShopManagement = () => {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] = useState("");
-  const [gadgetId, setGadgetId] = useState("");
-  const [productQuantity, setProductQuantity] = useState(0);
   const [page, setPage] = useState(1);
 
   // Debounce logic
@@ -29,11 +24,18 @@ const SalesManagement = () => {
     };
   }, [searchText]);
 
-  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery([
-    { name: "page", value: page },
-    { name: "limit", value: 12 },
-    { name: "searchTerm", value: debouncedSearchText },
-  ]);
+  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery(
+    [
+      { name: "page", value: page },
+      { name: "limit", value: 12 },
+      { name: "searchTerm", value: debouncedSearchText },
+    ],
+    {
+      refetchOnMountOrArgChange: true, // Refetch data on every visit or argument change
+      refetchOnFocus: true, // Optional: Refetch when the user focuses on the page
+      refetchOnReconnect: true, // Optional: Refetch when user reconnects
+    }
+  );
 
   const handleSearch = (e: any) => {
     setSearchText(e.target.value);
@@ -122,14 +124,7 @@ const SalesManagement = () => {
                       {category}
                     </p>
                     <div className="card-actions justify-end mt-3">
-                      <EbButton
-                        className="primary-main-btn w-full"
-                        onClick={() => {
-                          setIsSalesManagementModalOpen(true);
-                          setGadgetId(_id);
-                          setProductQuantity(quantity);
-                        }}
-                      >
+                      <EbButton className="primary-main-btn w-full">
                         Add to Cart
                       </EbButton>
                     </div>
@@ -147,14 +142,8 @@ const SalesManagement = () => {
           total={allGadgets?.meta?.total}
         />
       </div>
-      <SalesManageModal
-        isModalOpen={isSalesManagementModalOpen}
-        setIsModalOpen={setIsSalesManagementModalOpen}
-        gadgetId={gadgetId}
-        limit={productQuantity}
-      />
     </div>
   );
 };
 
-export default SalesManagement;
+export default ShopManagement;
