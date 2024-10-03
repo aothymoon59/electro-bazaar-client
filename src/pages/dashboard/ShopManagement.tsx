@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useGetAllGadgetsQuery } from "../../redux/features/gadgets/gadgetsApi";
 import { Empty, Input, Pagination } from "antd";
-import EbButton from "../../components/ui/EbButton";
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
 import ProductCardSkeleton from "../../components/global/loaders/cardSkeleton/ProductCardSkeleton";
+import ProductCard from "../../components/dashBoardShop/ProductCard";
 
 const ShopManagement = () => {
   const [searchText, setSearchText] = useState("");
@@ -72,65 +71,7 @@ const ShopManagement = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {Array.isArray(allGadgets?.data) &&
             allGadgets?.data?.map((gadget: any) => {
-              const {
-                _id,
-                productImage,
-                name,
-                price,
-                releaseDate,
-                brand,
-                modelNumber,
-                category,
-                quantity,
-              } = gadget;
-              return (
-                <div
-                  key={_id}
-                  className="card card-compact bg-primary-lighter shadow-md"
-                >
-                  <div className="p-3">
-                    <div className="bg-white w-full h-[200px] p-3 flex justify-center rounded-md">
-                      <img
-                        src={productImage}
-                        alt={name}
-                        className="rounded-xl h-[170px] max-w-full"
-                      />
-                    </div>
-                    <div className="mt-4">
-                      <h2 className="card-title">{name}</h2>
-                      <p className="flex gap-2">
-                        <span className="font-bold">Price:</span>${price}
-                      </p>
-                      <p className="flex gap-2">
-                        <span className="font-bold">Quantity:</span>
-                        {quantity}
-                      </p>
-                      <p className="flex gap-2">
-                        <span className="font-bold">Release Date:</span>
-
-                        <span>{moment(releaseDate).format("DD/MM/YYYY")}</span>
-                      </p>
-                      <p className="flex gap-2">
-                        <span className="font-bold">Brand:</span>
-                        {brand}
-                      </p>
-                      <p className="flex gap-2">
-                        <span className="font-bold">Model:</span>
-                        {modelNumber}
-                      </p>
-                      <p className="flex gap-2">
-                        <span className="font-bold">Category:</span>
-                        {category}
-                      </p>
-                      <div className="card-actions justify-end mt-3">
-                        <EbButton className="primary-main-btn w-full">
-                          Add to Cart
-                        </EbButton>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
+              return <ProductCard key={gadget?._id} gadget={gadget} />;
             })}
         </div>
       )}
