@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { useGetSaleHistoryQuery } from "../../redux/features/sales/salesApi";
 import moment from "moment";
-import { Pagination, Select, Spin, Table, type TableProps } from "antd";
+import { Pagination, Select, Table, type TableProps } from "antd";
 import { FaHome } from "react-icons/fa";
 import PageHeader from "../../components/ui/PageHeader";
+import AntdTableSkeleton from "../../components/global/loaders/tableskeleton/AntdTableSkeleton";
 
 interface SaleData {
   _id: string;
@@ -44,11 +45,12 @@ const columns: TableProps<SaleData>["columns"] = [
 const SalesHistory = () => {
   const [page, setPage] = useState(1);
   const [filterVal, setFilterValue] = useState("");
-  const { data: salesHistories, isLoading } = useGetSaleHistoryQuery([
-    { name: "page", value: page },
-    { name: "filterBy", value: filterVal },
-    { name: "sort", value: "slNo" },
-  ]);
+  const { data: salesHistories, isLoading: isSalesHistoryLoading } =
+    useGetSaleHistoryQuery([
+      { name: "page", value: page },
+      { name: "filterBy", value: filterVal },
+      { name: "sort", value: "slNo" },
+    ]);
 
   return (
     <div className="w-full">
@@ -74,7 +76,9 @@ const SalesHistory = () => {
         }
       />
       <div className="overflow-x-auto sales-history">
-        <Spin spinning={isLoading}>
+        {isSalesHistoryLoading ? (
+          <AntdTableSkeleton />
+        ) : (
           <Table
             className="custom-table"
             scroll={{ x: 768 }}
@@ -83,7 +87,7 @@ const SalesHistory = () => {
             rowKey="_id"
             pagination={false}
           />
-        </Spin>
+        )}
       </div>
       <div className="antd_custom_pagination flex justify-end mt-3">
         <Pagination
