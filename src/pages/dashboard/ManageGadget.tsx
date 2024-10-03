@@ -3,7 +3,8 @@ import { Pagination, Spin, Table, TableProps } from "antd";
 import {
   useDeleteGadgetMutation,
   useDeleteMultipleMutation,
-  useGetAllGadgetsQuery,
+  // useGetAllGadgetsQuery,
+  useGetManageGadgetsQuery,
 } from "../../redux/features/gadgets/gadgetsApi";
 import { useState } from "react";
 import { TQuery } from "../../types/query.types";
@@ -77,7 +78,7 @@ const ManageGadget = () => {
     return payload;
   };
 
-  const { data: allGadgets, isLoading } = useGetAllGadgetsQuery(
+  const { data: allGadgets, isLoading } = useGetManageGadgetsQuery(
     handleProductQuery(query)
   );
   const [deleteGadget] = useDeleteGadgetMutation();
@@ -103,13 +104,16 @@ const ManageGadget = () => {
         confirmButtonText: "Yes, delete!",
       }).then((result: any) => {
         if (result.isConfirmed) {
-          deleteMultiple(ids);
-
-          Swal.fire({
-            title: "Deleted!",
-            text: "Deleted Successfully.",
-            icon: "success",
-          });
+          deleteMultiple(ids)
+            .unwrap()
+            .then((res) => {
+              if (res?.success === true) {
+                toast.success(res?.message);
+              }
+            })
+            .catch((err) => {
+              toast.error(err.data.message);
+            });
         }
       });
     } catch (error: any) {
@@ -129,13 +133,16 @@ const ManageGadget = () => {
         confirmButtonText: "Yes, delete!",
       }).then((result: any) => {
         if (result.isConfirmed) {
-          deleteGadget(id);
-
-          Swal.fire({
-            title: "Deleted!",
-            text: "Deleted Successfully.",
-            icon: "success",
-          });
+          deleteGadget(id)
+            .unwrap()
+            .then((res) => {
+              if (res?.success === true) {
+                toast.success(res?.message);
+              }
+            })
+            .catch((err) => {
+              toast.error(err.data.message);
+            });
         }
       });
     } catch (error: any) {
