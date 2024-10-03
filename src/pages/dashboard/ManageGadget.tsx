@@ -171,7 +171,7 @@ const ManageGadget = () => {
         <img
           src={text}
           alt="gadget"
-          className="w-20 h-20 object-cover object-center"
+          className="w-12 h-12 object-cover object-center rounded-md"
         />
       ),
       align: "center",
