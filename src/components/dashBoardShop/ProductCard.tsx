@@ -1,3 +1,4 @@
+import LazyLoad from "react-lazy-load";
 import EbButton from "../ui/EbButton";
 import moment from "moment";
 
@@ -27,11 +28,13 @@ const ProductCard = ({ gadget }: { gadget: TGadgetProps }) => {
     <div className="card card-compact bg-primary-lighter shadow-md">
       <div className="p-3">
         <div className="bg-white w-full h-[200px] p-3 flex justify-center rounded-md">
-          <img
-            src={productImage}
-            alt={name}
-            className="rounded-xl h-[170px] max-w-full"
-          />
+          <LazyLoad height={`100%`} width={`100%`} offset={300}>
+            <img
+              src={productImage}
+              alt={name}
+              className="rounded-xl h-[170px] max-w-full"
+            />
+          </LazyLoad>
         </div>
         <div className="mt-4">
           <h2 className="card-title">{name}</h2>
