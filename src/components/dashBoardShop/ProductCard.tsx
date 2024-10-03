@@ -27,8 +27,13 @@ const ProductCard = ({ gadget }: { gadget: TGadgetProps }) => {
   return (
     <div className="card card-compact bg-primary-lighter shadow-md">
       <div className="p-3">
-        <div className="bg-white w-full h-[200px] p-3 flex justify-center rounded-md">
-          <LazyLoad height={`100%`} width={`100%`} offset={300}>
+        <div className="bg-white w-full h-[200px] p-3 rounded-md">
+          <LazyLoad
+            className="flex justify-center"
+            height={`100%`}
+            width={`100%`}
+            offset={300}
+          >
             <img
               src={productImage}
               alt={name}
