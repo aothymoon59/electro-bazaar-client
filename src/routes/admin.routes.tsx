@@ -11,8 +11,9 @@ import { FaHistory } from "react-icons/fa";
 import UpdateGadget from "../pages/dashboard/UpdateGadget";
 import ProductDetails from "../pages/dashboard/ProductDetails";
 import ShopManagement from "../pages/dashboard/ShopManagement";
+import ManageUsers from "../pages/dashboard/Manager/ManageUsers";
 
-export const dashboardPaths = [
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",
@@ -24,6 +25,12 @@ export const dashboardPaths = [
     path: "add-gadgets",
     element: <AddGadget />,
     icon: <BiSolidAddToQueue />,
+  },
+  {
+    name: "Manage Users",
+    path: "users",
+    element: <h2>users</h2>,
+    icon: <MdOutlineViewList />,
   },
   {
     name: "Manage Gadgets",
