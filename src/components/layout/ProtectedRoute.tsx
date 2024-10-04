@@ -4,6 +4,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { currentToken } from "../../redux/features/auth/authSlice";
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const user: any = useAppSelector(currentUser);
   const token = useAppSelector(currentToken);
   const location = useLocation();
   const navigate = useNavigate();

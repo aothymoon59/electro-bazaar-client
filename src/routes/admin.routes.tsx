@@ -29,7 +29,7 @@ export const adminPaths = [
   {
     name: "Manage Users",
     path: "users",
-    element: <h2>users</h2>,
+    element: <ManageUsers />,
     icon: <MdOutlineViewList />,
   },
   {
