@@ -33,26 +33,6 @@ const gadgetsApi = baseApi.injectEndpoints({
       },
       providesTags: ["gadgets"],
     }),
-    getManageGadgets: builder.query({
-      query: (args: any) => {
-        const params = new URLSearchParams();
-
-        if (args) {
-          args.forEach((item: TQueryParam) => {
-            if (item?.value) {
-              params.append(item.name, item.value as string);
-            }
-          });
-        }
-
-        return {
-          url: `/products/get-manage-products`,
-          method: "GET",
-          params: params,
-        };
-      },
-      providesTags: ["gadgets"],
-    }),
     getSingleGadget: builder.query({
       query: (id) => ({
         url: `/products/get-product/${id}`,
@@ -90,7 +70,6 @@ export const {
   useAddGadgetMutation,
   useGetSingleGadgetQuery,
   useGetAllGadgetsQuery,
-  useGetManageGadgetsQuery,
   useUpdateGadgetMutation,
   useDeleteMultipleMutation,
   useDeleteGadgetMutation,

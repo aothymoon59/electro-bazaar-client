@@ -3,8 +3,7 @@ import { Pagination, Table, TableProps } from "antd";
 import {
   useDeleteGadgetMutation,
   useDeleteMultipleMutation,
-  // useGetAllGadgetsQuery,
-  useGetManageGadgetsQuery,
+  useGetAllGadgetsQuery,
 } from "../../redux/features/gadgets/gadgetsApi";
 import { useState } from "react";
 import { TQuery } from "../../types/query.types";
@@ -17,6 +16,8 @@ import { Link } from "react-router-dom";
 import FilterDrawer from "../../components/form/FilterDrawer";
 import PageHeader from "../../components/ui/PageHeader";
 import AntdTableSkeleton from "../../components/global/loaders/tableskeleton/AntdTableSkeleton";
+import { useAppSelector } from "../../redux/hooks";
+import { currentUser } from "../../redux/features/auth/authSlice";
 
 interface GadgetData {
   _id: string;
@@ -30,6 +31,7 @@ interface GadgetData {
 }
 
 const ManageGadget = () => {
+  const user: any = useAppSelector(currentUser);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<Partial<TQuery>>({
     minPrice: null,
@@ -56,6 +58,11 @@ const ManageGadget = () => {
       { name: "category", value: query.category },
       { name: "cameraResolution", value: query.cameraResolution },
       { name: "storage", value: query.storage },
+      {
+        name: "addedBy",
+        value:
+          user?.role == "user" || user?.role == "customer" ? user?.id : null,
+      },
     ];
     if (query?.operatingSystem?.length) {
       payload.push({
@@ -80,7 +87,7 @@ const ManageGadget = () => {
   };
 
   const { data: allGadgets, isLoading: isAllGadgetsLoading } =
-    useGetManageGadgetsQuery(handleProductQuery(query), {
+    useGetAllGadgetsQuery(handleProductQuery(query), {
       refetchOnMountOrArgChange: true, // Refetch data on every visit or argument change
       refetchOnFocus: true, // Optional: Refetch when the user focuses on the page
       refetchOnReconnect: true, // Optional: Refetch when user reconnects
