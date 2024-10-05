@@ -9,6 +9,8 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { useAppSelector } from "../../../redux/hooks";
 import { currentUser } from "../../../redux/features/auth/authSlice";
+import { Dropdown, MenuProps } from "antd";
+import { SettingOutlined } from "@ant-design/icons";
 
 const Header = ({
   sidebarOpen,
@@ -27,6 +29,27 @@ const Header = ({
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <span>{user?.name?.split(" ")?.[0]}</span>,
+      disabled: true,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "2",
+      label: "Profile",
+    },
+    {
+      key: "3",
+      label: "Settings",
+      icon: <SettingOutlined />,
+    },
+  ];
+
   return (
     <header className="sticky top-0 z-[999] flex w-full bg-primary-main">
       <div className="flex flex-grow items-center justify-between px-3 py-4 xl:px-4">
@@ -68,13 +91,25 @@ const Header = ({
 
           {/* <!-- User Area --> */}
           <div className="flex items-center text-white gap-2">
-            <div className="hidden md:flex flex-col items-end">
+            <div className="hidden md:flex flex-col items-end mb-[7px]">
               <p className="text-[13px]">
                 {user?.name?.split(" ")?.slice(0, 2)?.join(" ")}
               </p>
               <span className="text-[10px]">{user?.role}</span>
             </div>
-            <FaUserCircle size={40} />
+            <Dropdown
+              className="cursor-pointer"
+              menu={{ items }}
+              trigger={["click"]}
+              placement="bottomRight"
+              arrow
+            >
+              <button className="bg-transparent border-none outline-none text-white">
+                <FaUserCircle size={40} />
+              </button>
+            </Dropdown>
+
+            {/* <FaUserCircle size={40} /> */}
           </div>
           {/* <!-- User Area --> */}
         </div>
