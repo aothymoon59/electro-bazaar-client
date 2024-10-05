@@ -5,14 +5,16 @@ import { dashboardPaths } from "./dashboard.routes";
 import { routesGenerator } from "../utils/routesGenerator";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
 import ErrorPage from "../pages/errorPage/ErrorPage";
-import MainLayout from "../components/layout/MainLayout";
+// import MainLayout from "../components/layout/MainLayout";
+import DefaultLayout from "../components/layout/DefaultLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <ProtectedRoute>
-        <MainLayout />
+        {/* <MainLayout /> */}
+        <DefaultLayout />
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
