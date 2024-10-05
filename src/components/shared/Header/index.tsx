@@ -7,10 +7,12 @@ import moment from "moment";
 import { IoMdNotifications } from "react-icons/io";
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
-import { useAppSelector } from "../../../redux/hooks";
-import { currentUser } from "../../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { currentUser, logout } from "../../../redux/features/auth/authSlice";
 import { Dropdown, MenuProps } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
+import { BiLogOutCircle } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 const Header = ({
   sidebarOpen,
@@ -30,6 +32,29 @@ const Header = ({
     return () => clearInterval(intervalId);
   }, []);
 
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to logout!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#2A2F4F",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(logout());
+        Swal.fire({
+          title: "Logged out!",
+          text: "Your account has been logged out.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -42,11 +67,23 @@ const Header = ({
     {
       key: "2",
       label: "Profile",
+      icon: <FaUserCircle />,
     },
     {
       key: "3",
-      label: "Settings",
+      label: "Account Settings",
       icon: <SettingOutlined />,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "4",
+      label: "Logout",
+      icon: <BiLogOutCircle size={17} />,
+      onClick: () => {
+        handleLogout();
+      },
     },
   ];
 
@@ -91,7 +128,7 @@ const Header = ({
 
           {/* <!-- User Area --> */}
           <div className="flex items-center text-white gap-2">
-            <div className="hidden md:flex flex-col items-end mb-[7px]">
+            <div className="hidden md:flex flex-col items-end">
               <p className="text-[13px]">
                 {user?.name?.split(" ")?.slice(0, 2)?.join(" ")}
               </p>
