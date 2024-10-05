@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Pagination, Table, TableProps } from "antd";
+/* import { Pagination, Table, TableProps } from "antd";
 import { useState } from "react";
 
 import moment from "moment";
@@ -140,4 +140,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default ManageUsers; */
