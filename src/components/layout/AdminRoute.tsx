@@ -1,9 +1,9 @@
 import { ReactNode, useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
-import { currentToken } from "../../redux/features/auth/authSlice";
+import { currentToken, currentUser } from "../../redux/features/auth/authSlice";
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+const AdminRoute = ({ children }: { children: ReactNode }) => {
   const user: any = useAppSelector(currentUser);
   const token = useAppSelector(currentToken);
   const location = useLocation();
@@ -24,4 +24,4 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   return children;
 };
 
-export default ProtectedRoute;
+export default AdminRoute;
