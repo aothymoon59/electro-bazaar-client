@@ -119,10 +119,13 @@ const Header = ({
         <div className="flex items-center gap-3 lg:gap-7">
           <ul className="flex items-center gap-2 lg:gap-4">
             {/* <!-- Notification Menu Area --> */}
-            <IoMdNotifications className="text-white" size={20} />
+            <IoMdNotifications
+              className="text-white cursor-pointer"
+              size={20}
+            />
             {/* <!-- Notification Menu Area --> */}
             {/* <!-- Chat Notification Area --> */}
-            <AiOutlineMessage className="text-white" size={20} />
+            <AiOutlineMessage className="text-white cursor-pointer" size={20} />
             {/* <!-- Chat Notification Area --> */}
           </ul>
 
