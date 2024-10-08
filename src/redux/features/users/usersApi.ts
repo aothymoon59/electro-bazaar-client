@@ -44,7 +44,19 @@ const usersApi = baseApi.injectEndpoints({
       },
       providesTags: ["users"],
     }),
+    changeUserStatus: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/change-status/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery, useGetManagersAndAdminsQuery } = usersApi;
+export const {
+  useGetAllUsersQuery,
+  useGetManagersAndAdminsQuery,
+  useChangeUserStatusMutation,
+} = usersApi;
