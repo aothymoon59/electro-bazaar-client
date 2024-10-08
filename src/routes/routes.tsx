@@ -69,7 +69,13 @@ const router = createBrowserRouter([
       },
       {
         path: "sales-history",
-        element: <SalesHistory />,
+        element: (
+          <AuthorizedRoute
+            roles={[USER_ROLE.user, USER_ROLE.manager, USER_ROLE.superAdmin]}
+          >
+            <SalesHistory />
+          </AuthorizedRoute>
+        ),
       },
     ],
   },

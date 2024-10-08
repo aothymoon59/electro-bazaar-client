@@ -7,6 +7,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { currentUser } from "../../../redux/features/auth/authSlice";
 import { BiSitemap, BiSolidAddToQueue } from "react-icons/bi";
 import { FaHistory } from "react-icons/fa";
+import { USER_ROLE } from "../../../constants/global";
 
 interface IRoute {
   path: string;
@@ -20,31 +21,41 @@ const routes: IRoute[] = [
     label: "Dashboard",
     path: "/dashboard",
     icon: <MdDashboard />,
-    role: ["manager", "user", "customer", "superAdmin"],
+    role: [
+      USER_ROLE.manager,
+      USER_ROLE.user,
+      USER_ROLE.customer,
+      USER_ROLE.superAdmin,
+    ],
   },
   {
     label: "Add Gadgets",
     path: "/add-gadgets",
     icon: <BiSolidAddToQueue />,
-    role: ["manager", "user", "superAdmin"],
+    role: [USER_ROLE.manager, USER_ROLE.superAdmin, USER_ROLE.user],
   },
   {
     label: "Manage Gadgets",
     path: "/gadgets",
     icon: <MdDashboard />,
-    role: ["manager", "user", "superAdmin"],
+    role: [USER_ROLE.manager, USER_ROLE.superAdmin, USER_ROLE.user],
   },
   {
     label: "Shop",
     path: "/shop",
     icon: <BiSitemap />,
-    role: ["manager", "user", "superAdmin"],
+    role: [
+      USER_ROLE.user,
+      USER_ROLE.customer,
+      USER_ROLE.manager,
+      USER_ROLE.superAdmin,
+    ],
   },
   {
     label: "Sales History",
     path: "/sales-history",
     icon: <FaHistory />,
-    role: ["manager", "user", "superAdmin"],
+    role: [USER_ROLE.manager, USER_ROLE.superAdmin, USER_ROLE.user],
   },
 ];
 
