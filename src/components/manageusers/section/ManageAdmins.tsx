@@ -1,19 +1,24 @@
 import { useState } from "react";
-import { useGetAllUsersQuery } from "../../../redux/features/users/usersApi";
+import { useGetManagersAndAdminsQuery } from "../../../redux/features/users/usersApi";
 import { Pagination, Table, TableProps } from "antd";
 import { userData } from "../../../types/global";
 import AntdTableSkeleton from "../../global/loaders/tableskeleton/AntdTableSkeleton";
 import { FaTrash } from "react-icons/fa";
 
-const ManageUserAndCustomer = () => {
+const ManageAdmins = () => {
   const [page, setPage] = useState(1);
 
-  const { data: allUsers, isLoading: isAllUsersLoading } = useGetAllUsersQuery([
-    {
-      name: "page",
-      value: page,
-    },
-  ]);
+  const { data: allUsers, isLoading: isAllUsersLoading } =
+    useGetManagersAndAdminsQuery([
+      {
+        name: "page",
+        value: page,
+      },
+      {
+        name: "sort",
+        value: "-role",
+      },
+    ]);
 
   const handleDeleteUser = (id: string) => {
     console.log(id);
@@ -35,7 +40,7 @@ const ManageUserAndCustomer = () => {
       dataIndex: "role",
       key: "role",
       render: (text) => {
-        return text === "user" ? "Seller" : "Customer";
+        return text === "manager" ? "Manager" : "Super Admin";
       },
     },
     {
@@ -62,7 +67,7 @@ const ManageUserAndCustomer = () => {
   return (
     <div>
       <h2 className="text-lg font-semibold text-left mb-3">
-        Users and Customers
+        Managers and Admins
       </h2>
       <div className="overflow-x-auto sales-history">
         {isAllUsersLoading ? (
@@ -90,4 +95,4 @@ const ManageUserAndCustomer = () => {
   );
 };
 
-export default ManageUserAndCustomer;
+export default ManageAdmins;

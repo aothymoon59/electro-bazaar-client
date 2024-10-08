@@ -2,6 +2,7 @@
 import PageHeader from "../../../components/ui/PageHeader";
 import { FaHome } from "react-icons/fa";
 import ManageUserAndCustomer from "../../../components/manageusers/section/ManageUserAndCustomer";
+import ManageAdmins from "../../../components/manageusers/section/ManageAdmins";
 
 const ManageUsers = () => {
   return (
@@ -13,6 +14,7 @@ const ManageUsers = () => {
           { label: "Manage Users", isCurrent: true },
         ]}
       />
+      <ManageAdmins />
       <ManageUserAndCustomer />
     </div>
   );
