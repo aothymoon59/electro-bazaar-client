@@ -48,7 +48,7 @@ const LatestSales = () => {
 
   return (
     <div className="w-full mt-6 p-5 bg-primary-lighter">
-      <h2 className="text-lg font-semibold text-left mb-6">Latest Sales</h2>
+      <h2 className="text-lg font-semibold text-left mb-3">Latest Sales</h2>
       <div className="overflow-x-auto sales-history">
         <Spin spinning={isLoading}>
           <Table
