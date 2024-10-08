@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Result } from "antd";
 //Error git page
-const ErrorPage = () => {
+const UnAuthorized = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Result
@@ -21,4 +21,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default UnAuthorized;

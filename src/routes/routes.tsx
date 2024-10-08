@@ -14,6 +14,7 @@ import SalesHistory from "../pages/dashboard/SalesHistory";
 import UnProtectedRoute from "../components/layout/UnprotectedRoute";
 import AuthorizedRoute from "../components/layout/AuthorizedRoute";
 import { USER_ROLE } from "../constants/global";
+import UnAuthorized from "../pages/errorPage/UnAuthorized";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
         <Register />
       </UnProtectedRoute>
     ),
+  },
+  {
+    path: "/unauthorized",
+    element: <UnAuthorized />,
   },
 ]);
 
