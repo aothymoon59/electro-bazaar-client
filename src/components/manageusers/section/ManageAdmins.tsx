@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { useGetManagersAndAdminsQuery } from "../../../redux/features/users/usersApi";
+import {
+  useChangeUserStatusMutation,
+  useGetManagersAndAdminsQuery,
+} from "../../../redux/features/users/usersApi";
 import { Pagination, Select, Switch, Table, TableProps } from "antd";
 import { userData } from "../../../types/global";
 import AntdTableSkeleton from "../../global/loaders/tableskeleton/AntdTableSkeleton";
 import { FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const ManageAdmins = () => {
   const [page, setPage] = useState(1);
@@ -24,8 +28,19 @@ const ManageAdmins = () => {
     console.log(id);
   };
 
-  const onStatusChange = (checked: boolean) => {
-    console.log(checked);
+  const [changeUserStatus] = useChangeUserStatusMutation();
+  const onStatusChange = async (payload: { id: string; status: string }) => {
+    const status = payload.status == "blocked" ? "active" : "blocked";
+    try {
+      const res = await changeUserStatus({
+        id: payload.id,
+        data: { status },
+      }).unwrap();
+
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const columns: TableProps<userData>["columns"] = [
@@ -69,7 +84,11 @@ const ManageAdmins = () => {
       width: 200,
       render: (text, record) => {
         return record?.role !== "superAdmin" ? (
-          <Switch defaultChecked={text == "active"} onChange={onStatusChange} />
+          <Switch
+            title={text == "active" ? "Switch to Block" : "Switch to Active"}
+            defaultChecked={text == "active"}
+            onChange={() => onStatusChange({ status: text, id: record?._id })}
+          />
         ) : (
           <span className="text-red-500 text-xs font-semibold">
             Cannot be changed
