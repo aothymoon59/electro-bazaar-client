@@ -54,12 +54,12 @@ const ManageUserAndCustomer = () => {
       dataIndex: "role",
       key: "role",
       width: 250,
-      render: (text) => {
+      render: (text, record) => {
         return (
           <Select
             defaultValue={text}
             style={{ width: "100%" }}
-            // onChange={handleChange}
+            onChange={() => handleChangeRole({ role: text, id: record?._id })}
             options={[
               { value: "user", label: "User" },
               { value: "customer", label: "Customer" },
