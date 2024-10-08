@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetManagersAndAdminsQuery } from "../../../redux/features/users/usersApi";
-import { Pagination, Table, TableProps } from "antd";
+import { Pagination, Select, Switch, Table, TableProps } from "antd";
 import { userData } from "../../../types/global";
 import AntdTableSkeleton from "../../global/loaders/tableskeleton/AntdTableSkeleton";
 import { FaTrash } from "react-icons/fa";
@@ -24,6 +24,10 @@ const ManageAdmins = () => {
     console.log(id);
   };
 
+  const onStatusChange = (checked: boolean) => {
+    console.log(checked);
+  };
+
   const columns: TableProps<userData>["columns"] = [
     {
       title: "Name",
@@ -39,27 +43,57 @@ const ManageAdmins = () => {
       title: "Role",
       dataIndex: "role",
       key: "role",
+      width: 250,
       render: (text) => {
-        return text === "manager" ? "Manager" : "Super Admin";
+        return text !== "superAdmin" ? (
+          <Select
+            defaultValue={text}
+            style={{ width: "100%" }}
+            // onChange={handleChange}
+            options={[
+              { value: "user", label: "User" },
+              { value: "customer", label: "Customer" },
+              { value: "manager", label: "Manager" },
+              { value: "superAdmin", label: "Super Admin", disabled: true },
+            ]}
+          />
+        ) : (
+          "Super Admin"
+        );
       },
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      width: 200,
+      render: (text, record) => {
+        return record?.role !== "superAdmin" ? (
+          <Switch defaultChecked={text == "active"} onChange={onStatusChange} />
+        ) : (
+          <span className="text-red-500 text-xs font-semibold">
+            This role cannot be changed
+          </span>
+        );
+      },
     },
     {
       title: "Action",
       fixed: "right",
       width: 150,
+      align: "center",
       render: (_text, record) => (
-        <div className="flex justify-start items-center gap-3">
+        <div className="flex justify-center items-center gap-3">
           {/* <Link to={`/gadgets/view/${record._id}`}>
               <FaEye size={18} />
             </Link> */}
-          <a onClick={() => handleDeleteUser(record._id)}>
-            <FaTrash size={14} className="text-red-500" />
-          </a>
+          {record?.role !== "superAdmin" ? (
+            <a onClick={() => handleDeleteUser(record._id)}>
+              <FaTrash size={16} className="text-red-500" />
+            </a>
+          ) : (
+            "--"
+          )}
         </div>
       ),
     },
