@@ -11,6 +11,7 @@ import ProductDetails from "../pages/dashboard/ProductDetails";
 import UpdateGadget from "../pages/dashboard/UpdateGadget";
 import ShopManagement from "../pages/dashboard/ShopManagement";
 import SalesHistory from "../pages/dashboard/SalesHistory";
+import UnProtectedRoute from "../components/layout/UnprotectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -54,11 +55,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <UnProtectedRoute>
+        <Login />
+      </UnProtectedRoute>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <UnProtectedRoute>
+        <Register />
+      </UnProtectedRoute>
+    ),
   },
 ]);
 
