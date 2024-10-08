@@ -12,7 +12,7 @@ import UpdateGadget from "../pages/dashboard/UpdateGadget";
 import ProductDetails from "../pages/dashboard/ProductDetails";
 import ShopManagement from "../pages/dashboard/ShopManagement";
 
-export const dashboardPaths = [
+export const adminPaths = [
   {
     name: "Dashboard",
     path: "dashboard",

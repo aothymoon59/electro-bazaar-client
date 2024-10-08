@@ -3,7 +3,7 @@ import logo from "../../../assets/icons/lamp.png";
 import { FaArrowLeft } from "react-icons/fa6";
 import { Menu } from "antd";
 import { sidebarItemsGenerator } from "../../../utils/sidebarItemsGenerator";
-import { dashboardPaths } from "../../../routes/dashboard.routes";
+import { adminPaths } from "../../../routes/manager.routes";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -19,11 +19,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5 lg:py-5">
-        <Link to="/">
-          <div className="flex justify-center items-center gap-1 text-white">
-            <img className="w-7 h-7" src={logo} alt="logo" />
-            <h3>ElectroBazaar</h3>
-          </div>
+        <Link
+          to="/"
+          className="flex justify-center items-center gap-1 text-white"
+        >
+          <img className="w-7 h-7" src={logo} alt="logo" />
+          <h2>ElectroBazaar</h2>
         </Link>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -41,7 +42,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           className="bg-primary-main sider max-h-[80vh] overflow-y-auto"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={sidebarItemsGenerator(dashboardPaths)}
+          items={sidebarItemsGenerator(adminPaths)}
         />
         {/* </nav> */}
         {/* <!-- Sidebar Menu --> */}

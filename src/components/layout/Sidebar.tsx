@@ -1,6 +1,5 @@
 import { Layout, Menu } from "antd";
 import logo from "../../assets/icons/lamp.png";
-import { dashboardPaths } from "../../routes/dashboard.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { IoLogOut } from "react-icons/io5";
 import { logout } from "../../redux/features/auth/authSlice";
