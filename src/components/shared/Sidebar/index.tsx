@@ -1,9 +1,52 @@
-import { Link } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/icons/lamp.png";
 import { FaArrowLeft } from "react-icons/fa6";
-import { Menu } from "antd";
-import { sidebarItemsGenerator } from "../../../utils/sidebarItemsGenerator";
-import { adminPaths } from "../../../routes/manager.routes";
+import { MdDashboard } from "react-icons/md";
+import { useAppSelector } from "../../../redux/hooks";
+import { currentUser } from "../../../redux/features/auth/authSlice";
+import { BiSitemap, BiSolidAddToQueue } from "react-icons/bi";
+import { FaHistory } from "react-icons/fa";
+
+interface IRoute {
+  path: string;
+  icon: JSX.Element;
+  label: string;
+  role: ("user" | "manager" | "customer" | "superAdmin")[];
+}
+
+const routes: IRoute[] = [
+  {
+    label: "Dashboard",
+    path: "/dashboard",
+    icon: <MdDashboard />,
+    role: ["manager", "user", "customer", "superAdmin"],
+  },
+  {
+    label: "Add Gadgets",
+    path: "/add-gadgets",
+    icon: <BiSolidAddToQueue />,
+    role: ["manager", "user", "superAdmin"],
+  },
+  {
+    label: "Manage Gadgets",
+    path: "/gadgets",
+    icon: <MdDashboard />,
+    role: ["manager", "user", "superAdmin"],
+  },
+  {
+    label: "Shop",
+    path: "/shop",
+    icon: <BiSitemap />,
+    role: ["manager", "user", "superAdmin"],
+  },
+  {
+    label: "Sales History",
+    path: "/sales-history",
+    icon: <FaHistory />,
+    role: ["manager", "user", "superAdmin"],
+  },
+];
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -11,6 +54,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const user: any = useAppSelector(currentUser);
   return (
     <aside
       className={`absolute left-0 top-0 z-[9999] flex h-screen w-72.5 flex-col overflow-y-hidden bg-primary-main duration-300 ease-linear lg:static lg:translate-x-0 ${
@@ -38,12 +82,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
         {/* <nav className="py-4 px-4  lg:px-6"> */}
-        <Menu
-          className="bg-primary-main sider max-h-[80vh] overflow-y-auto"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={sidebarItemsGenerator(adminPaths)}
-        />
+        <ul className="px-1">
+          {routes
+            .filter((route) => route.role.includes(user?.role))
+            .map((route, i) => {
+              return (
+                <li key={i}>
+                  <NavLink
+                    to={route.path}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-primary-lighter text-sm px-4 py-2 rounded flex items-center gap-2 text-primary-main my-1"
+                        : "text-sm px-4 py-2 my-1 rounded flex items-center gap-2 text-primary-lighter"
+                    }
+                  >
+                    {route.icon} <span>{route.label}</span>
+                  </NavLink>
+                </li>
+              );
+            })}
+        </ul>
         {/* </nav> */}
         {/* <!-- Sidebar Menu --> */}
       </div>
