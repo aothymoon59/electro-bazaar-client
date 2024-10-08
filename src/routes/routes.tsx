@@ -12,6 +12,8 @@ import UpdateGadget from "../pages/dashboard/UpdateGadget";
 import ShopManagement from "../pages/dashboard/ShopManagement";
 import SalesHistory from "../pages/dashboard/SalesHistory";
 import UnProtectedRoute from "../components/layout/UnprotectedRoute";
+import AuthorizedRoute from "../components/layout/AuthorizedRoute";
+import { USER_ROLE } from "../constants/global";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +31,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-gadgets",
-        element: <AddGadget />,
+        element: (
+          <AuthorizedRoute
+            roles={[USER_ROLE.user, USER_ROLE.manager, USER_ROLE.superAdmin]}
+          >
+            <AddGadget />
+          </AuthorizedRoute>
+        ),
       },
       {
         path: "/gadgets",
-        element: <ManageGadget />,
+        element: (
+          <AuthorizedRoute
+            roles={[USER_ROLE.user, USER_ROLE.manager, USER_ROLE.superAdmin]}
+          >
+            <ManageGadget />
+          </AuthorizedRoute>
+        ),
       },
       {
         path: "/gadgets/view/:id",
@@ -41,7 +55,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/gadgets/update/:id",
-        element: <UpdateGadget />,
+        element: (
+          <AuthorizedRoute
+            roles={[USER_ROLE.user, USER_ROLE.manager, USER_ROLE.superAdmin]}
+          >
+            <UpdateGadget />
+          </AuthorizedRoute>
+        ),
       },
       {
         path: "shop",
