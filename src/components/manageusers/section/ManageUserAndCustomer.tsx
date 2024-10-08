@@ -40,7 +40,7 @@ const ManageUserAndCustomer = () => {
       key: "role",
       width: 250,
       render: (text) => {
-        return text !== "superAdmin" ? (
+        return (
           <Select
             defaultValue={text}
             style={{ width: "100%" }}
@@ -52,8 +52,6 @@ const ManageUserAndCustomer = () => {
               { value: "superAdmin", label: "Super Admin", disabled: true },
             ]}
           />
-        ) : (
-          "Super Admin"
         );
       },
     },
@@ -62,13 +60,9 @@ const ManageUserAndCustomer = () => {
       dataIndex: "status",
       key: "status",
       width: 200,
-      render: (text, record) => {
-        return record?.role !== "superAdmin" ? (
+      render: (text) => {
+        return (
           <Switch defaultChecked={text == "active"} onChange={onStatusChange} />
-        ) : (
-          <span className="text-red-500 text-xs font-semibold">
-            This role cannot be changed
-          </span>
         );
       },
     },

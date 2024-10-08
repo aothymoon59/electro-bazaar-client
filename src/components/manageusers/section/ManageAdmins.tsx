@@ -72,7 +72,7 @@ const ManageAdmins = () => {
           <Switch defaultChecked={text == "active"} onChange={onStatusChange} />
         ) : (
           <span className="text-red-500 text-xs font-semibold">
-            This role cannot be changed
+            Cannot be changed
           </span>
         );
       },
