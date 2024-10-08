@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  useChangeUserRoleMutation,
   useChangeUserStatusMutation,
   useGetManagersAndAdminsQuery,
 } from "../../../redux/features/users/usersApi";
@@ -43,6 +44,20 @@ const ManageAdmins = () => {
     }
   };
 
+  const [changeUserRole] = useChangeUserRoleMutation();
+  const handleChangeRole = async (payload: { id: string; role: string }) => {
+    try {
+      const res = await changeUserRole({
+        id: payload.id,
+        data: { role: payload.role },
+      }).unwrap();
+
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const columns: TableProps<userData>["columns"] = [
     {
       title: "Name",
@@ -59,12 +74,12 @@ const ManageAdmins = () => {
       dataIndex: "role",
       key: "role",
       width: 250,
-      render: (text) => {
+      render: (text, record) => {
         return text !== "superAdmin" ? (
           <Select
             defaultValue={text}
             style={{ width: "100%" }}
-            // onChange={handleChange}
+            onChange={(val) => handleChangeRole({ id: record?._id, role: val })}
             options={[
               { value: "user", label: "User" },
               { value: "customer", label: "Customer" },
