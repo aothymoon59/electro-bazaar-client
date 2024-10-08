@@ -46,8 +46,8 @@ const usersApi = baseApi.injectEndpoints({
     }),
     changeUserStatus: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/change-status/${id}`,
-        method: "PUT",
+        url: `/users/change-status/${id}`,
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["users"],
