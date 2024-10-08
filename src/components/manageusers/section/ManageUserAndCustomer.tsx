@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  useChangeUserRoleMutation,
   useChangeUserStatusMutation,
   useGetAllUsersQuery,
 } from "../../../redux/features/users/usersApi";
@@ -38,6 +39,20 @@ const ManageUserAndCustomer = () => {
     }
   };
 
+  const [changeUserRole] = useChangeUserRoleMutation();
+  const handleChangeRole = async (payload: { id: string; role: string }) => {
+    try {
+      const res = await changeUserRole({
+        id: payload.id,
+        data: { role: payload.role },
+      }).unwrap();
+
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const columns: TableProps<userData>["columns"] = [
     {
       title: "Name",
@@ -59,7 +74,7 @@ const ManageUserAndCustomer = () => {
           <Select
             defaultValue={text}
             style={{ width: "100%" }}
-            onChange={() => handleChangeRole({ role: text, id: record?._id })}
+            onChange={(val) => handleChangeRole({ id: record?._id, role: val })}
             options={[
               { value: "user", label: "User" },
               { value: "customer", label: "Customer" },
@@ -80,7 +95,7 @@ const ManageUserAndCustomer = () => {
           <Switch
             title={text == "active" ? "Switch to Block" : "Switch to Active"}
             defaultChecked={text == "active"}
-            onChange={() => onStatusChange({ status: text, id: record?._id })}
+            onChange={() => onStatusChange({ id: record?._id, status: text })}
           />
         );
       },
