@@ -57,6 +57,12 @@ const routes: IRoute[] = [
     icon: <FaHistory />,
     role: [USER_ROLE.manager, USER_ROLE.superAdmin, USER_ROLE.user],
   },
+  {
+    label: "Manage Users",
+    path: "/manage-users",
+    icon: <MdDashboard />,
+    role: [USER_ROLE.manager, USER_ROLE.superAdmin],
+  },
 ];
 
 interface SidebarProps {

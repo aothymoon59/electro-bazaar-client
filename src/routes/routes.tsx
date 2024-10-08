@@ -15,6 +15,7 @@ import UnProtectedRoute from "../components/layout/UnprotectedRoute";
 import AuthorizedRoute from "../components/layout/AuthorizedRoute";
 import { USER_ROLE } from "../constants/global";
 import UnAuthorized from "../pages/errorPage/UnAuthorized";
+import ManageUsers from "../pages/dashboard/Manager/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
             roles={[USER_ROLE.user, USER_ROLE.manager, USER_ROLE.superAdmin]}
           >
             <SalesHistory />
+          </AuthorizedRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <AuthorizedRoute roles={[USER_ROLE.manager, USER_ROLE.superAdmin]}>
+            <ManageUsers />
           </AuthorizedRoute>
         ),
       },
