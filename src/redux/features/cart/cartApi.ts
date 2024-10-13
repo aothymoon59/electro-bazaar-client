@@ -12,7 +12,14 @@ const cartApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["gadgets", "cart"],
     }),
+    getCart: builder.query({
+      query: () => ({
+        url: "/cart/get-carts",
+        method: "GET",
+      }),
+      providesTags: ["cart"],
+    }),
   }),
 });
 
-export const { useAddToCartMutation } = cartApi;
+export const { useAddToCartMutation, useGetCartQuery } = cartApi;
